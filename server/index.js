@@ -35,6 +35,9 @@ app.use('/qrcode.png', function(req, resp) {
     });
 });
 
+var login = require('./login');
+app.use('/login', login);
+
 
 app.listen(3000, function(){
   console.log('Listening on port 3000.');
