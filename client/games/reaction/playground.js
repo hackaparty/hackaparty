@@ -1,3 +1,5 @@
+import playground from "../playground";
+
 const dimX = 800;
 const dimY = 600;
 
@@ -7,9 +9,13 @@ const playerSize = 50;
 const obstacleSize = 20;
 const obstacleSpeed = 10;
 
-export default {
-  direction: 0,
-  run: function() {
+class reaction extends playground {
+  constructor() {
+    super()
+    this.direction = 0;
+  }
+
+  initDisplay() {
     let app = new PIXI.Application(dimX, dimY, {backgroundColor: 0x1099bb});
     document.body.appendChild(app.view);
 
@@ -47,9 +53,9 @@ export default {
 
 
     }.bind(this));
-  },
+  }
 
-  addPlayer: function(y, color){
+  addPlayer(y, color){
     let player = new PIXI.Graphics();
 
     player.lineStyle(2, color, 1);
@@ -61,9 +67,9 @@ export default {
     player.y = y;
 
     this.players.addChild(player);
-  },
+  }
 
-  addObstacle: function(y, speed, size){
+  addObstacle(y, speed, size){
     let obstacle = new PIXI.Graphics();
 
     obstacle.lineStyle(2, 0x00ff00, 1);
@@ -77,16 +83,18 @@ export default {
     obstacle.speed = obstacleSpeed;
 
     this.obstacles.addChild(obstacle);
-  },
+  }
 
-  onmessage: function(msg){
-    console.log(msg.data);
+  receiveMessage(message){
+    let dir = JSON.parse(message.data).message;
 
-    if(msg.data === 'up'){
+    if(dir === 'up'){
       this.direction = 1;
     }
-    else if(msg.data === 'down'){
+    else if(dir === 'down'){
       this.direction = -1;
     }
   }
 }
+
+export default reaction;

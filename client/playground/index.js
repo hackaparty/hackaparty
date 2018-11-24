@@ -1,3 +1,3 @@
-import example from '../games/example/playground'
+import reaction from '../games/reaction/playground'
 
-new example()
+new reaction()
