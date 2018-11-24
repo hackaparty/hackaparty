@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ $# -eq 0 ]
     then
         echo "please pass the url to which the players should connect as argument";
