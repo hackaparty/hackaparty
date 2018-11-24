@@ -231,12 +231,19 @@ class snake extends playground {
 
         var fruechteErstellen = function() {
             if(fruechte.length < 10) {
-                let x = Math.round(Math.random()*(meinSpielfeld.width+1));
-                let y = Math.round(Math.random()*(meinSpielfeld.height+1));
-                let punkte = Math.round(Math.random()*41);
+                let x = Math.round(Math.random()*(meinSpielfeld.width));
+                let y = Math.round(Math.random()*(meinSpielfeld.height));
+                let punkte = Math.round(Math.random()*40);
 
                 fruechte.push(new Frucht(x, y, punkte));
             }
+        }
+
+        frucht.prototype.render() {
+            ctx.fillStyle('black');
+            let appleSize = segmentSize*(this.punkte/40)
+            ctx.fillRect(this.x + segmentSize/2- appleSize/2, this.y + segmentSize/2- appleSize/2,
+                appleSize, appleSize);
         }
 
         var isSnakeOnCoordinates = function (x, y){
@@ -272,17 +279,19 @@ class snake extends playground {
         //Schaut ob eine Frucht auf einem Schlangenkopf ist
         //Fügt die Punkte hinzue und löscht die Frucht
         //führt NICHT grow aus
-        var fruchtKollesion = function () {
-            for(var s = 0; s < schlangen.length; s++) {
-                for(var f = 0; f < fruechte.length; f++) {
-                    if(schlangen[s].segments[0].x == fruechte[f].x
-                    && schlangen[s].segments[0].y == fruechte[f].y) {
-                        schlangen[s].punkte += fruechte[f].punkte;
-                        return true;
-                    }
-                }
+        var fruchtKollision = function (schlange) {
 
+            for(var f = 0; f < fruechte.length; f++) {
+                if(schlange.segments[0].x == fruechte[f].x
+                && schlange.segments[0].y == fruechte[f].y) {
+                    schlange.punkte += fruechte[f].punkte;
+                    fruechte.splice(f,1);
+                    schlange.grow();
+                    return true;
+                }
             }
+
+
         }
 
 
@@ -294,7 +303,7 @@ class snake extends playground {
         var gameLoopIntervalID = setInterval(gameLoop(), 1000);
 
         var teams = [
-            { color:'yellow'},
+            {color:'yellow'},
             {color:'red'},
             {color:'blue'}
         ];
