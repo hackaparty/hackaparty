@@ -28,7 +28,15 @@ class server {
 
     onControllerMessage(controllerSocket)  {
         return (message) => {
-            console.log(message)
+            try {
+                let msg = JSON.parse(message)
+                if(msg.init) {
+                    this.controllerSockets.set(controllerSocket, msg.init)
+                    return
+                }
+            } catch(e){
+
+            }
             var msg = {
                 player : this.controllerSockets.get(controllerSocket),
                 message: `${message}`
