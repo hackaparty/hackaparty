@@ -3,6 +3,10 @@ const WebSocket = require('ws');
 const QRCode = require('qrcode');
 const app = express();
 
+if(process.argv[2] == undefined) {
+  throw new Error('Must pass URL to login page');
+}
+
 global.users = [];
 global.teams = [];
 
