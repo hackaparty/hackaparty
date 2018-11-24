@@ -11,6 +11,7 @@ var radius = 600;
 var angleA = 0;
 var angleB = 180;
 var angleDelta = 0.5;
+var figureSize = 200;
 var targetSize = 200;
 
 
@@ -25,6 +26,8 @@ class rabbitHead extends playground {
 
     // create a new Sprite from an image path
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
+    this.bunny.width = figureSize;
+    this.bunny.height = figureSize;
 
     
     this.goalTeamA = PIXI.Sprite.fromImage(targetDummyA)
@@ -40,18 +43,13 @@ class rabbitHead extends playground {
     this.bunny.anchor.set(0.5);
 
     // move the sprite to the center of the screen
-    this.bunny.x = width / 2;
-    this.bunny.y = app.screen.height / 2;
 
-    this.goalTeamA.x = width - 200;
-    this.goalTeamA.y = app.screen.height / 2;
-    
-    this.goalTeamB.x = 200;
-    this.goalTeamB.y = app.screen.height / 2;
+    this.resetToDefaultPositions(app);
 
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
+
 
     // Listen for animate update
     app.ticker.add(function (delta) { 
@@ -68,7 +66,49 @@ class rabbitHead extends playground {
       // creates frame-independent transformation
     //  this.goalTeamA.x = 50
       this.bunny.rotation += 0.03 * delta;
+
+      var redTeamWon = this.detectCollition(this.goalTeamA, this.bunny);
+      var blueTeamWon = this.detectCollition(this.goalTeamB, this.bunny);
+      
+      this.informWinner(blueTeamWon, redTeamWon, app);
+
+   //   this.detectCollition(this.goalTeamB, this.bunny);
     }.bind(this));
+  }
+    informWinner(blueTeamWon, redTeamWon, app){
+      if (blueTeamWon)
+      {
+        alert("Blue team won");
+        blueTeamWon = false;
+        this.resetToDefaultPositions(app); 
+      }
+      else if (redTeamWon){
+        alert("Red team won");
+        redTeamWon = false;
+        this.resetToDefaultPositions(app); 
+      }
+    }
+
+    resetToDefaultPositions(app){
+      angleA = 0;
+      angleB = 180;
+      this.bunny.x = app.screen.width / 2;
+      this.bunny.y = app.screen.height / 2;
+      this.goalTeamA.x = width - 200;
+      this.goalTeamA.y = app.screen.height / 2;
+    
+      this.goalTeamB.x = 200;
+      this.goalTeamB.y = app.screen.height / 2;
+    }
+
+  detectCollition(objA,objB) {
+    if (objA.x < objB.x + objB.width &&
+      objA.x + objA.width > objB.x &&
+      objA.y < objB.y + objB.height &&
+      objA.height + objA.y > objB.y) {
+        return true;
+   }
+   return false;
   }
 
   receiveMessage(message) {

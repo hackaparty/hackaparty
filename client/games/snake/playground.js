@@ -260,7 +260,8 @@ class snake extends playground {
 
         var gameLoop = function () {
             if (!isRunning) {
-                clearInterval(gameLoopIntervalId)
+                clearInterval(gameLoopIntervalId);
+                gameEnded();
             }
             updateSnakes();
             if (Math.random() < 0.2) {
@@ -270,9 +271,31 @@ class snake extends playground {
             meinSpielfeld.render();
         }
 
-        var updateSnakes = function ()
-        {
-            // TODO : implement
+        var updateSnakes = function () {
+            schlangen.forEach (schlange => {
+                let hasGrown = fruchtKollision(element)
+                if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
+                    moveSnake(schlange);
+                }
+            });
+        }
+
+        var moveSnake = function (schlange) {
+            // TODO : fetch inputs and move snakes
+        }
+
+        var gameEnded = function () {
+            // TODO : getWinner and forward to winning screen
+
+            let maxPoints = 0;
+            let maxPointsSnake;
+            schlangen.forEach( schlange => {
+                if(schlange.points > maxPoints) // TODO : fix multiple winners
+                {
+                    maxPoints = schlange.points;
+                    maxPointsSnake = schlange;
+                }
+            });
         }
 
 

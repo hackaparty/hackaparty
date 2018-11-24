@@ -86,6 +86,7 @@ class reaction extends playground {
   }
 
   receiveMessage(message){
+    console.log(message);
     let dir = JSON.parse(message.data).message;
 
     if(dir === 'up'){
