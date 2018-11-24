@@ -1,3 +1,3 @@
-import example from '../games/example/playground'
+import rabbitHead from '../games/rabbitHead/playground'
 
-new example()
+new rabbitHead()

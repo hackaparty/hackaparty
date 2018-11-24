@@ -19,6 +19,8 @@ class snake extends playground {
 
         var segmentSize;
 
+        var isRunning;
+
         var colors = {
             'green':'#00ff00',
             'red':'#ff0000',
@@ -237,6 +239,36 @@ class snake extends playground {
             }
         }
 
+        var isSnakeOnCoordinates = function (x, y){
+            schlangen.forEach (schlange => {
+                schlange.segmente.forEach (segment => {
+                    if (segment.x == x && segment.y == y) {
+                        return true;
+                    }
+                });
+
+            });
+            return false;
+        }
+
+        var gameLoop = function () {
+            if (!isRunning) {
+                clearInterval(gameLoopIntervalId)
+            }
+            updateSnakes();
+            if (Math.random() < 0.2) {
+                fruechteErstellen ()
+            }
+
+            meinSpielfeld.render();
+        }
+
+        var updateSnakes = function ()
+        {
+            // TODO : implement
+        }
+
+
         //Schaut ob eine Frucht auf einem Schlangenkopf ist
         //Fügt die Punkte hinzue und löscht die Frucht
         //führt NICHT grow aus
@@ -255,10 +287,11 @@ class snake extends playground {
 
 
 
-
         var meinSpielfeld = new Grid(60,40);
-        meinSpielfeld.render();
         console.log('height'+meinSpielfeld.height);
+        isRunning = true
+        var stopGameIntervalID = setInterval(function (){isRunning=false;},60000)
+        var gameLoopIntervalID = setInterval(gameLoop(), 1000);
 
         var teams = [
             { color:'yellow'},
