@@ -16,7 +16,7 @@ class server {
         controllerSocket.on('message', this.onControllerMessage(controllerSocket));
         controllerSocket.on('close', () =>{
             this.controllerSockets.delete(controllerSocket)
-            controllerSocket.destroy();
+            controllerSocket && controllerSocket.destroy && controllerSocket.destroy();
         });
     }
 
