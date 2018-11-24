@@ -1,14 +1,17 @@
 import controller from '../controller'
-import bunnasdyImage from './images/bunny.png'
 import bunnyImage from './images/pony-icon.png'
-import targetDummy from './images/target-dummy.png'
+import targetDummyA from './images/target-dummy-red.png'
+import targetDummyB from './images/target-dummy-blue.png'
 import playground from '../playground'
 
 
-var width = 1800;
-var height = 1400;
-var radius = 800;
-var angle = 5;
+var width = 2000;
+var height = 2000;
+var radius = 600;
+var angleA = 0;
+var angleB = 180;
+var angleDelta = 0.5;
+var targetSize = 200;
 
 
 class rabbitHead extends playground {
@@ -24,9 +27,14 @@ class rabbitHead extends playground {
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
 
     
-    this.goalTeamA = PIXI.Sprite.fromImage(bunnyImage)
+    this.goalTeamA = PIXI.Sprite.fromImage(targetDummyA)
+    this.goalTeamA.width = targetSize;
+    this.goalTeamA.height = targetSize;
     
-    this.goalTeamB = PIXI.Sprite.fromImage(bunnyImage)
+    this.goalTeamB = PIXI.Sprite.fromImage(targetDummyB)
+    this.goalTeamB.width = targetSize;
+    this.goalTeamB.height = targetSize;
+    
 
     // center the sprite's anchor point
     this.bunny.anchor.set(0.5);
@@ -47,17 +55,19 @@ class rabbitHead extends playground {
 
     // Listen for animate update
     app.ticker.add(function (delta) { 
+      angleA += angleDelta
+      angleB += angleDelta; 
 
-      this.bunny.x = width / 2 + radius * Math.cos(angle * Math.PI / 180);
-      this.bunny.y = height / 2 + radius * Math.sin(angle * Math.PI / 180);
+      this.goalTeamA.x = width / 2 + radius * Math.cos(angleA * Math.PI / 180);
+      this.goalTeamA.y = height / 2 + radius * Math.sin(angleA * Math.PI / 180);
 
-    //  this.goalTeamB.x = this.goalTeamB.x + radius * Math.cos(angle * Math.PI / 180);
-    //  this.goalTeamB.y = this.goalTeamB.y + radius * Math.sin(angle * Math.PI / 180);
+      this.goalTeamB.x = width / 2  + radius * Math.cos(angleB * Math.PI / 180);
+      this.goalTeamB.y = height / 2 + radius * Math.sin(angleB * Math.PI / 180);
       // just for fun, let's rotate mr rabbit a little
       // delta is 1 if running at 100% performance
       // creates frame-independent transformation
     //  this.goalTeamA.x = 50
-   //   this.bunny.rotation += 0.03 * delta;
+      this.bunny.rotation += 0.03 * delta;
     }.bind(this));
   }
 
