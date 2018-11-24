@@ -65,5 +65,9 @@ module.exports = {
             chunks: false,
             children: false
         },
+      proxy: {
+        '/startup': 'http://localhost:3000/startup',
+        '/qrcode.png': 'http://localhost:3000/qrcode.png',
+      }
     }
 }
