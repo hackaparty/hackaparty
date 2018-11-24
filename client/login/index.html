@@ -5,6 +5,16 @@
 
     </head>
     <body>
-        Login Page
+        <h1>Login Page</h1>
+        <Form action="/login" method="POST">
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Name" />
+            <label for="team">Team</label>
+            <select id="team">
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+            </select>
+            <input type="submit" value="Let's go!"></input>
+        </Form>
     </body>
 </html>
