@@ -1,6 +1,6 @@
 const express = require('express');
 const WebSocket = require('ws');
-
+const QRCode = require('qrcode');
 const app = express();
 
 //initialize the WebSocket server instance
@@ -26,6 +26,14 @@ wss.on('connection', (ws, req) => {
 
 app.use('/controller', express.static('controller'));
 app.use('/playground', express.static('playground'));
+app.use('/startup',    express.static('startup'));
+
+app.use('/qrcode.png', function(req, resp) {
+    resp.type("png");
+    QRCode.toFileStream(resp, 'I am a pony!', {
+      scale: 10
+    });
+});
 
 
 app.listen(3000, function(){
