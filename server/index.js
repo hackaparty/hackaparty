@@ -18,6 +18,10 @@ wss.on('connection', (ws, req) => {
       }
     });
   }
+  else if(req.url === '/startup') {
+    server = ws;
+    server.send("James");
+  }
   else {
     ws.destroy();
   }
@@ -36,7 +40,8 @@ app.use('/qrcode.png', function(req, resp) {
 });
 
 var login = require('./login');
-app.use('/login', login);
+login.setWS(wss);
+app.use('/login', login.router);
 
 
 app.listen(3000, function(){

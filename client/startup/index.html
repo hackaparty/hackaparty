@@ -1,6 +1,17 @@
 <!DOCTYPE html5>
 <html>
-    <head></head>
+    <head>
+        <script>
+        var exampleSocket = new WebSocket("ws://" + location.hostname + ":3001/startup");
+        exampleSocket.onmessage = function(event) {
+            console.log("event" + event.data);
+        }        
+        exampleSocket.onopen = function () {
+            console.log("onopen");
+          exampleSocket.send('Ping'); // Send the message 'Ping' to the server
+        };
+        </script>
+    </head>
     <body>
         <h1>>Hackaparty!</h1>
         <img src="/qrcode.png"/>
