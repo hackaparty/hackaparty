@@ -34,23 +34,23 @@ class snake extends playground {
   }
 
   receiveMessage(message) {
-    console.log(msg.data);
-    if(msg.data === 'left'){
+    let dir = JSON.parse(message.data).message;
+    if(dir === 'left'){
       if(this.bunny.x>0) {
         this.bunny.x -= 10;
       }
     }
-    else if(msg.data === 'right'){
+    else if(dir === 'right'){
       if(this.bunny.x<800) {
         this.bunny.x += 10;
       }
     }
-    else if(msg.data === 'up'){
+    else if(dir === 'up'){
       if(this.bunny.y > 0) {
         this.bunny.y -= 10;
       }
     }
-    else if(msg.data === 'down'){
+    else if(dir === 'down'){
       if(this.bunny.y < 600) {
         this.bunny.y += 10;
       }
