@@ -30,9 +30,10 @@ router.get('/teams', function (req, res) {
 router.post('/', function (req, res) {
   var username = req.body.name;
   var userteam = req.body.team;
+  var client_id = uuidv4();
   console.log("Who logged in: " + username);
-  ws.send("" + username + " logged in for team (" + userteam + ")"); // type = LOGIN_STATUS
-  global.users.push({name:username, team:userteam});
+  ws.send("" + username + " logged in for team (" + userteam + ")");
+  global.users.push({name:username, team:userteam, client_id: client_id});
   var added = false;
   global.teams.forEach(element => {
     if (element.teamName === userteam) {
@@ -43,7 +44,7 @@ router.post('/', function (req, res) {
   if (!added) {
     global.teams.push({teamName:userteam, members:[username]})
   }
-  res.redirect('/controller?client_id=' + uuidv4());
+  res.redirect('/controller?client_id=' + client_id);
 })
 
 module.exports = {

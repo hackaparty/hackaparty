@@ -4,25 +4,31 @@ const QRCode = require('qrcode');
 const app = express();
 const GamesServer = require('./server')
 let gamesServer;
+const getGamesServer = (ws) => {
+    if(gamesServer) {
+        gamesServer.reconnect(ws)
+    } else {
+        gamesServer = new GamesServer(ws)
+    }
+}
 
 if(process.argv[2] == undefined) {
-  throw new Error('Must pass URL to login page');
+//  throw new Error('Must pass URL to login page');
 }
 
 global.users = [];
 global.teams = [];
+
+
 
 //initialize the WebSocket server instance
 const wss = new WebSocket.Server({port: 3001});
 let server;
 
 wss.on('connection', (ws, req) => {
-  if(req.url === '/playground'){
-      if(gamesServer) {
-          gamesServer.reconnect(ws)
-      } else {
-          gamesServer = new GamesServer(ws)
-      }
+    getGamesServer (ws)
+    if(req.url === '/playground'){
+
   }
   else if(req.url === '/controller') {
       if(gamesServer){
