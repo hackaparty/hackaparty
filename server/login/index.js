@@ -20,8 +20,21 @@ router.get('/', express.static('client/login'));
 
 // define the about route
 router.post('/', function (req, res) {
-  console.log("Who logged in: " + req.body.name);
-  ws.send("" + req.body.name + " logged in for team (" + req.body.team + ")"); // type = LOGIN_STATUS
+  var username = req.body.name;
+  var userteam = req.body.team;
+  console.log("Who logged in: " + username);
+  ws.send("" + username + " logged in for team (" + userteam + ")"); // type = LOGIN_STATUS
+  global.users.push({name:username, team:userteam});
+  var added = false;
+  global.teams.forEach(element => {
+    if (element.teamName === userteam) {
+      element.members.push(username);
+      added = true;
+    }
+  });
+  if (!added) {
+    global.teams.push({teamName:userteam, members:[username]})
+  }
   res.redirect('/controller?client_id=' + uuidv4());
 })
 

@@ -3,6 +3,9 @@ const WebSocket = require('ws');
 const QRCode = require('qrcode');
 const app = express();
 
+global.users = [];
+global.teams = [];
+
 //initialize the WebSocket server instance
 const wss = new WebSocket.Server({port: 3001});
 let server;

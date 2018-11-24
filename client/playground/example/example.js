@@ -31,16 +31,24 @@ export default {
   onmessage: function(msg){
     console.log(msg.data);
     if(msg.data === 'left'){
-      this.bunny.x -= 10;
+      if(this.bunny.x>0) {
+        this.bunny.x -= 10;
+      }
     }
     else if(msg.data === 'right'){
-      this.bunny.x += 10;
+      if(this.bunny.x<800) {
+        this.bunny.x += 10;
+      }
     }
     else if(msg.data === 'up'){
-      this.bunny.y -= 10;
+      if(this.bunny.y > 0) {
+        this.bunny.y -= 10;
+      }
     }
     else if(msg.data === 'down'){
-      this.bunny.y += 10;
+      if(this.bunny.y < 600) {
+        this.bunny.y += 10;
+      }
     }
   }
 }
