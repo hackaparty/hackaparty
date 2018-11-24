@@ -11,7 +11,7 @@ class playground {
 
 
     initSocket() {
-        this.socket = new WebSocket("ws://" + location.hostname + ":3001/controller");
+        this.socket = new WebSocket("ws://" + location.hostname + ":3001/playground");
         this.socket.onmessage = this.receiveMessage.bind(this);
     }
 
