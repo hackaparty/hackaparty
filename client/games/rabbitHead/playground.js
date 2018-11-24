@@ -43,14 +43,8 @@ class rabbitHead extends playground {
     this.bunny.anchor.set(0.5);
 
     // move the sprite to the center of the screen
-    this.bunny.x = width / 2;
-    this.bunny.y = app.screen.height / 2;
 
-    this.goalTeamA.x = width - 200;
-    this.goalTeamA.y = app.screen.height / 2;
-    
-    this.goalTeamB.x = 200;
-    this.goalTeamB.y = app.screen.height / 2;
+    this.resetToDefaultPositions(app);
 
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
@@ -76,21 +70,35 @@ class rabbitHead extends playground {
       var redTeamWon = this.detectCollition(this.goalTeamA, this.bunny);
       var blueTeamWon = this.detectCollition(this.goalTeamB, this.bunny);
       
-      this.informWinner(blueTeamWon, redTeamWon);
+      this.informWinner(blueTeamWon, redTeamWon, app);
 
    //   this.detectCollition(this.goalTeamB, this.bunny);
     }.bind(this));
   }
-    informWinner(blueTeamWon, redTeamWon){
+    informWinner(blueTeamWon, redTeamWon, app){
       if (blueTeamWon)
       {
-      alert("Blue team won");
-      blueTeamWon = false;
+        alert("Blue team won");
+        blueTeamWon = false;
+        this.resetToDefaultPositions(app); 
       }
       else if (redTeamWon){
-      alert("Red team won");
-      redTeamWon = false;
+        alert("Red team won");
+        redTeamWon = false;
+        this.resetToDefaultPositions(app); 
       }
+    }
+
+    resetToDefaultPositions(app){
+      angleA = 0;
+      angleB = 180;
+      this.bunny.x = app.screen.width / 2;
+      this.bunny.y = app.screen.height / 2;
+      this.goalTeamA.x = width - 200;
+      this.goalTeamA.y = app.screen.height / 2;
+    
+      this.goalTeamB.x = 200;
+      this.goalTeamB.y = app.screen.height / 2;
     }
 
   detectCollition(objA,objB) {
