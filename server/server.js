@@ -1,10 +1,16 @@
 class server {
+
     constructor (playgroundSocket) {
         this.playgroundSocket = playgroundSocket
         this.controllerSockets = new Map();
         playgroundSocket.on('close', () =>{
             playgroundSocket && playgroundSocket.destroy && playgroundSocket.destroy();
         });
+    }
+
+    reconnect (playgroundSocket) {
+        this.playgroundSocket && this.playgroundSocket.close()
+        this.playgroundSocket = playgroundSocket
     }
 
     addControllerSocket(controllerSocket) {
