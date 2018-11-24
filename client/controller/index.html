@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 <body>
-<button onclick="openFullscreen()">fullscreen</button>
-<div id="play" style="background: blue">
+<button onclick="onOpenFullscreen()">fullscreen</button>
+<div id="play" style="background: pink">
   <div id="gyro-a">a</div>
   <div id="gyro-b">b</div>
   <div id="gyro-c">c</div>
@@ -25,27 +25,6 @@
 -->
 
 </body>
-<script type="text/javascript">
-var elem = document.getElementById("play");
-
-/* When the openFullscreen() function is executed, open the video in fullscreen.
-Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
-function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    elem.msRequestFullscreen();
-  }
-}
-var exampleSocket = new WebSocket("ws://" + location.hostname + ":3001/controller");
-  exampleSocket.onopen = function () {
-    exampleSocket.send('Ping'); // Send the message 'Ping' to the server
-  };
-</script>
 <style>
   body {
     user-select: none;
