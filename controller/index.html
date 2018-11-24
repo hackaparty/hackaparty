@@ -6,10 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 <body>
-<div ontouchstart="exampleSocket.send('up')" class="button up">Up</div>
-<div ontouchstart="exampleSocket.send('down')" class="button down">Down</div>
-<div ontouchstart="exampleSocket.send('left')" class="button left">Left</div>
-<div ontouchstart="exampleSocket.send('right')" class="button right">Right</div>
+<button onclick="openFullscreen()">fullscreen</button>
+<div id="play">
+  <div ontouchstart="exampleSocket.send('up')" class="button up">Up</div>
+  <div ontouchstart="exampleSocket.send('down')" class="button down">Down</div>
+  <div ontouchstart="exampleSocket.send('left')" class="button left">Left</div>
+  <div ontouchstart="exampleSocket.send('right')" class="button right">Right</div>
+</div>
 
 <!--
 <svg class="joystick" viewBox="0 0 100 100">
@@ -19,7 +22,22 @@
 
 </body>
 <script type="text/javascript">
-  var exampleSocket = new WebSocket("ws://" + location.hostname + ":3001/controller");
+var elem = document.getElementById("play");
+
+/* When the openFullscreen() function is executed, open the video in fullscreen.
+Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}
+var exampleSocket = new WebSocket("ws://" + location.hostname + ":3001/controller");
   exampleSocket.onopen = function () {
     exampleSocket.send('Ping'); // Send the message 'Ping' to the server
   };
