@@ -7,7 +7,11 @@
 </head>
 <body>
 <button onclick="openFullscreen()">fullscreen</button>
-<div id="play">
+<div id="play" style="background: blue">
+  <div id="gyro-a">a</div>
+  <div id="gyro-b">b</div>
+  <div id="gyro-c">c</div>
+  <div id="gyro-d">d</div>
   <div ontouchstart="exampleSocket.send('up')" class="button up">Up</div>
   <div ontouchstart="exampleSocket.send('down')" class="button down">Down</div>
   <div ontouchstart="exampleSocket.send('left')" class="button left">Left</div>
