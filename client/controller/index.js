@@ -20,3 +20,7 @@ window.onOpenFullscreen =  function() {
     elem.msRequestFullscreen();
   }
 }
+
+window.sendMessageToServer = function(msg){
+  exampleSocket.send(msg);
+}
