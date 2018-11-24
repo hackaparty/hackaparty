@@ -10,9 +10,9 @@ export default function(server) {
         sendEvents = true;
     }
 
-    var     minDiff = 20,
-    minDiff2 = 30,
-    minDiff3 = 40;
+    var     minDiff = 10,
+    minDiff2 = 20,
+    minDiff3 = 30;
 
     var offsetGamma = 0.0,
     offsetBeta = 0.0,
@@ -49,7 +49,7 @@ export default function(server) {
             if(Math.abs(gamma) > minDiff3){
                 eventCount++;
             }
-            
+
             for (var i = 0; i < eventCount; i++) {
                 
                 gamma > 0 ? server.send('up') : server.send('down');
