@@ -26,7 +26,7 @@ wss.on('connection', (ws, req) => {
 
 app.use('/controller', express.static('controller'));
 app.use('/playground', express.static('playground'));
-app.use('/startup',    express.static('startup'));
+app.use('/startup',    express.static('client/startup'));
 
 app.use('/qrcode.png', function(req, resp) {
     resp.type("png");

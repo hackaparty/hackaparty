@@ -66,7 +66,7 @@ module.exports = {
             children: false
         },
       proxy: {
-        '/startup': 'http://localhost:3000/startup',
+        '/startup': 'http://localhost:3000/',
         '/qrcode.png': 'http://localhost:3000/qrcode.png',
       }
     }
