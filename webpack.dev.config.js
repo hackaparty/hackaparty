@@ -53,6 +53,12 @@ module.exports = {
             chunks: ['controller'],
             filename: 'controller/index.html'
         }),
+        new HtmlWebpackPlugin({
+            template: 'client/startup/index.html',
+            inject: true,
+            chunks: ['startup'],
+            filename: 'startup/index.html'
+        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
         })
@@ -67,6 +73,7 @@ module.exports = {
         },
       proxy: {
         '/startup': 'http://localhost:3000/',
+        '/login': 'http://localhost:3000/',
         '/qrcode.png': 'http://localhost:3000/qrcode.png',
       }
     }

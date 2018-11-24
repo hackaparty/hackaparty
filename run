@@ -6,5 +6,5 @@ if [ $# -eq 0 ]
         exit 1;
 fi
 
-node server/index.js $@ &
-npm start
+DANGEROUSLY_DISABLE_HOST_CHECK=true node server/index.js $@ &
+DANGEROUSLY_DISABLE_HOST_CHECK=true npm start
