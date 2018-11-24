@@ -1,1 +1,1 @@
-console.log('contzroller')
+require('./controller.events.gyro')
