@@ -30,7 +30,7 @@ app.use('/startup',    express.static('client/startup'));
 
 app.use('/qrcode.png', function(req, resp) {
     resp.type("png");
-    QRCode.toFileStream(resp, 'I am a pony!', {
+    QRCode.toFileStream(resp, process.argv[2], {
       scale: 10
     });
 });
