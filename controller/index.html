@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body>
+<div ontouchstart="exampleSocket.send('up')" class="button up">Up</div>
+<div ontouchstart="exampleSocket.send('down')" class="button down">Down</div>
+<div ontouchstart="exampleSocket.send('left')" class="button left">Left</div>
+<div ontouchstart="exampleSocket.send('right')" class="button right">Right</div>
+
+<!--
+<svg class="joystick" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="50" ontouch=""></circle>
+</svg>
+-->
+
+</body>
+<script type="text/javascript">
+  var exampleSocket = new WebSocket("ws://" + location.hostname + ":3001/controller");
+  exampleSocket.onopen = function () {
+    exampleSocket.send('Ping'); // Send the message 'Ping' to the server
+  };
+</script>
+<style>
+  body {
+    user-select: none;
+  }
+
+  .joystick{
+    position: absolute;
+    right: 0;
+    width: 70vh;
+    height: 70vh;
+  }
+
+  .button {
+    width: 28vw;
+    height: 28vh;
+    font-size: 5vh;
+    background: grey;
+    text-align: center;
+  }
+  .up{
+    position: fixed;
+    left: 35vw;
+    top: 5vh;
+  }
+  .down{
+    position: fixed;
+    left: 35vw;
+    top: 65vh;
+  }
+  .left{
+    position: fixed;
+    left: 5vw;
+    top: 35vh;
+  }
+  .right{
+    position: fixed;
+    left: 65vw;
+    top: 35vh;
+  }
+</style>
+</html>
