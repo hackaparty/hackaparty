@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var bodyParser = require('body-parser');
 var multer = require('multer');
+var path = require('path');
 
 
 router.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -16,7 +17,7 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-router.get('/', express.static('client/login'));
+router.use(express.static(path.resolve(__dirname, '../../client/login')));
 
 router.get('/users', function (req, res) {
   res.send(global.users);  
