@@ -43,7 +43,7 @@ class server {
             }
 
             if(this.playgroundSocket){
-                this.playgroundSocket.send(JSON.stringify(msg));
+                this.playgroundSocket.readyState === 1 && this.playgroundSocket.send(JSON.stringify(msg));
             }
         }
     }

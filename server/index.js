@@ -28,10 +28,9 @@ let server;
 wss.on('connection', (ws, req) => {
 
     if(req.url === '/playground'){
-
+      getGamesServer (ws)
   }
   else if(req.url === '/controller') {
-    getGamesServer (ws)      
       if(gamesServer){
           gamesServer.addControllerSocket(ws);
       }
