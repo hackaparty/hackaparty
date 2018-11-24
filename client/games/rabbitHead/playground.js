@@ -11,6 +11,7 @@ var radius = 600;
 var angleA = 0;
 var angleB = 180;
 var angleDelta = 0.5;
+var figureSize = 200;
 var targetSize = 200;
 
 
@@ -25,6 +26,8 @@ class rabbitHead extends playground {
 
     // create a new Sprite from an image path
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
+    this.bunny.width = figureSize;
+    this.bunny.height = figureSize;
 
     
     this.goalTeamA = PIXI.Sprite.fromImage(targetDummyA)
@@ -53,6 +56,7 @@ class rabbitHead extends playground {
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
 
+
     // Listen for animate update
     app.ticker.add(function (delta) { 
       angleA += angleDelta
@@ -68,7 +72,35 @@ class rabbitHead extends playground {
       // creates frame-independent transformation
     //  this.goalTeamA.x = 50
       this.bunny.rotation += 0.03 * delta;
+
+      var redTeamWon = this.detectCollition(this.goalTeamA, this.bunny);
+      var blueTeamWon = this.detectCollition(this.goalTeamB, this.bunny);
+      
+      this.informWinner(blueTeamWon, redTeamWon);
+
+   //   this.detectCollition(this.goalTeamB, this.bunny);
     }.bind(this));
+  }
+    informWinner(blueTeamWon, redTeamWon){
+      if (blueTeamWon)
+      {
+      alert("Blue team won");
+      blueTeamWon = false;
+      }
+      else if (redTeamWon){
+      alert("Red team won");
+      redTeamWon = false;
+      }
+    }
+
+  detectCollition(objA,objB) {
+    if (objA.x < objB.x + objB.width &&
+      objA.x + objA.width > objB.x &&
+      objA.y < objB.y + objB.height &&
+      objA.height + objA.y > objB.y) {
+        return true;
+   }
+   return false;
   }
 
   receiveMessage(message) {
