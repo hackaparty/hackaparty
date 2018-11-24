@@ -11,7 +11,7 @@ class example extends controller {
     }
 
     initControls() {
-        document.querySelector('.button.up').onmousedown = () => this.sendMessage.bind(this, 'up')
+        document.querySelector('.button.up').onmousedown = () => this.sendMessage('up')
         document.querySelector('.button.down').onmousedown = () => this.sendMessage('down')
         document.querySelector('.button.left').onmousedown = () => this.sendMessage('left')
         document.querySelector('.button.right').onmousedown = () => this.sendMessage('right')
