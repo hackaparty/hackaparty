@@ -1,0 +1,8 @@
+if [ $# -eq 0 ]
+    then
+        echo "please pass the url to which the players should connect as argument";
+        exit 1;
+fi
+
+node server/index.js $@ &
+npm start
