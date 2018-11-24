@@ -6,7 +6,7 @@ const GamesServer = require('./server')
 let gamesServer;
 
 if(process.argv[2] == undefined) {
-  throw new Error('Must pass URL to login page');
+//  throw new Error('Must pass URL to login page');
 }
 
 global.users = [];

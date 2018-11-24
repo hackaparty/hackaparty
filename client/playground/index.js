@@ -1,3 +1,3 @@
-import reaction from '../games/reaction/playground'
+import rabbitHead from '../games/rabbitHead/playground'
 
-new reaction()
+new rabbitHead()
