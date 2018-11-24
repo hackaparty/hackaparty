@@ -18,7 +18,11 @@ let server;
 
 wss.on('connection', (ws, req) => {
   if(req.url === '/playground'){
-    gamesServer = new GamesServer(ws)
+      if(gamesServer) {
+          gamesServer.reconnect(ws)
+      } else {
+          gamesServer = new GamesServer(ws)
+      }
   }
   else if(req.url === '/controller') {
       if(gamesServer){
