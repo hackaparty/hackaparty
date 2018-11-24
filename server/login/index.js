@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
   var userteam = req.body.team;
   var client_id = uuidv4();
   console.log("Who logged in: " + username);
-  ws.send("" + username + " logged in for team (" + userteam + ")");
+  
   global.users.push({name:username, team:userteam, client_id: client_id});
   var added = false;
   global.teams.forEach(element => {
@@ -42,16 +42,46 @@ router.post('/', function (req, res) {
     }
   });
   if (!added) {
-    global.teams.push({teamName:userteam, members:[username]})
+    global.teams.push({teamName:userteam, members:[username]});
   }
+
+  try {
+    ws.send("" + username + " logged in for team (" + userteam + ")");
+  } catch(e) {
+    console.log("Ooops, can't send to QR screen WS for username: " + username + " - continuing");
+  }
+
   res.redirect('/controller?client_id=' + client_id);
 })
 
 module.exports = {
   setWS: function(wss) {
     wss.on('connection', (newWs, req) => {
-      ws = newWs;
-    })
+      if(req.url === '/startup') {
+        // console.log("New WS connection");
+        ws = newWs;
+        ws.on('close', function(event) {
+          // console.log("Closing WS: " + event);
+        });
+        ws.on('error', function(event) {
+          // console.log("Errored WS: " + event);
+        });
+        ws.on('message', function(event) {
+          // console.log("Message: " + event);
+        })
+      };
+    });
+    // const interval = setInterval(function ping() {
+    //   wss.clients.forEach(function each(ws) {
+    //     if (ws.isAlive === false) {
+    //       console.log("ws is not alive - terminating");
+    //       return ws.terminate();
+    //     }
+    
+    //     ws.isAlive = false;
+    //     ws.ping(function() {}); // noop
+    //   });
+    // }, 30000);    
   },
   router
 }

@@ -6,6 +6,14 @@
         exampleSocket.onmessage = function(event) {
             console.log("event" + event.data);
         }        
+        exampleSocket.onclose = function(event) {
+            console.log("websocket closed");
+            console.log(event);            
+        }
+        exampleSocket.onerror = function(event) {
+            console.log("websocket error");
+            console.log(event);
+        }
         exampleSocket.onopen = function () {
             console.log("onopen");
           exampleSocket.send('Ping'); // Send the message 'Ping' to the server

@@ -26,11 +26,12 @@ const wss = new WebSocket.Server({port: 3001});
 let server;
 
 wss.on('connection', (ws, req) => {
-    getGamesServer (ws)
+
     if(req.url === '/playground'){
 
   }
   else if(req.url === '/controller') {
+    getGamesServer (ws)      
       if(gamesServer){
           gamesServer.addControllerSocket(ws);
       }
@@ -39,6 +40,7 @@ wss.on('connection', (ws, req) => {
 
   }
   else {
+    console.log("Unknown WS connection URL: " + req.url);
     ws.destroy();
   }
 });
