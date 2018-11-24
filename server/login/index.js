@@ -18,6 +18,14 @@ router.use(function timeLog (req, res, next) {
 
 router.get('/', express.static('client/login'));
 
+router.get('/users', function (req, res) {
+  res.send(global.users);  
+});
+
+router.get('/teams', function (req, res) {
+  res.send(global.teams);
+})
+
 // define the about route
 router.post('/', function (req, res) {
   var username = req.body.name;
