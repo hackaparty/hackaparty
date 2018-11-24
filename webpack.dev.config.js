@@ -73,6 +73,7 @@ module.exports = {
         },
       proxy: {
         '/startup': 'http://localhost:3000/',
+        '/login': 'http://localhost:3000/',
         '/qrcode.png': 'http://localhost:3000/qrcode.png',
       }
     }
