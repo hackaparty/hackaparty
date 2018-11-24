@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8080 3001 3000
 
-CMD [ "./run", "hello" ]
+CMD [ "./run" ]
