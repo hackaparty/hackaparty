@@ -1,6 +1,6 @@
 import playground from '../playground'
 import controller from "../controller";
-import bunnyImage from "../../playground/example/bunny.png";
+import bunnyImage from "./bunny.png";
 
 class snake extends playground {
   constructor() {
@@ -34,7 +34,27 @@ class snake extends playground {
   }
 
   receiveMessage(message) {
-
+    console.log(msg.data);
+    if(msg.data === 'left'){
+      if(this.bunny.x>0) {
+        this.bunny.x -= 10;
+      }
+    }
+    else if(msg.data === 'right'){
+      if(this.bunny.x<800) {
+        this.bunny.x += 10;
+      }
+    }
+    else if(msg.data === 'up'){
+      if(this.bunny.y > 0) {
+        this.bunny.y -= 10;
+      }
+    }
+    else if(msg.data === 'down'){
+      if(this.bunny.y < 600) {
+        this.bunny.y += 10;
+      }
+    }
   }
 }
 
