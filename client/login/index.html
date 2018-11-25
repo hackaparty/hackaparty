@@ -2,31 +2,60 @@
 
 <html>
     <head>
+        <title>Login!</title>
+        <meta charset="UTF-8">
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <style>
             .footer{
-            width: 100%;
-            background-color: white;
-            position: fixed;
-            clear: both;
-            }            
+                width: 100%;
+                background-color: white;
+                clear: both;
+                font-size: 50%;
+            }        
+            body {
+                user-select: none;
+                font-family:Arial, Helvetica, sans-serif;                
+                font-size: 150%;
+            } 
+            form {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                grid-gap: 20px;
+            }
+            form p {
+                grid-column: 1 / 2;
+            }
+            input[type=text] {
+                width: 100%;
+            }
         </style>
     </head>
     <body>
-        <h1>> Hackaparty Login!</h1>
-        <form action="/login" method="POST">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Name" />
-            <label for="team">Team</label>
-            <select id="team" name="team">
-                <option value="blue">Blue</option>
-                <option value="red">Red</option>
-            </select>
-            <input type="submit" value="Let's go!"></input>
-        </form>
+        <h1>Login!</h1>
+        <div class="container">
+            <form action="/login" method="POST">
+                <p>
+                <label for="name">Name:</label>
+                <input id="name" name="name" type="text" placeholder="Enter a name to display on the big screen" />
+                </p>
+                <p>
+                <label for="team">Team:</label>
+                <select id="team" name="team">
+                    <option value="blue">Blue</option>
+                    <option value="red" selected="selected">Red</option>
+                </select>
+                </p>
+                <p>
+                <input type="submit" value="Let's go!"></input>
+                </p>
+            </form>
+        </div>
+
+        <hr/>
 
         <div class="footer">
-Data Usage: no data is stored persistently on the server-side.  Data you enter will be sent across the internet to the server location (if running on Amazon EC2, this in Germany; otherwise, this is local).
+Data Usage:<br/>No data is stored persistently on the server.  Data you enter will be sent across the internet to the server location (if running on Amazon EC2, this in Germany; otherwise, this is local).
         </div>
     </body>
 </html>
