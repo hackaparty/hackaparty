@@ -15,7 +15,6 @@ class server {
     }
 
     addControllerSocket(controllerSocket) {
-        console.log('addconteoller socke')
         if(this.controllerSockets.has(controllerSocket)) {
             return;
         }
@@ -30,8 +29,8 @@ class server {
 
     initUser (controllerSocket, id) {
         let user = (global.users || []).filter((user) => user.client_id === id)[0]
-
         this.controllerSockets.set(controllerSocket, user)
+        controllerSocket.send(JSON.stringify(user))
     }
 
     onControllerMessage(controllerSocket)  {

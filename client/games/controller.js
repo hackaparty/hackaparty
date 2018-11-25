@@ -28,7 +28,8 @@ class controller {
     }
 
     receiveMessage(message) {
-
+        let data = JSON.parse(message.data)
+        console.log(data)
     }
 
     initControls() {}
