@@ -19,7 +19,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }],
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
                 include: defaultInclude
             },
             {
@@ -30,6 +30,18 @@ module.exports = {
             {
                 test: /\.(jpe?g|png|gif)$/,
                 use: [{ loader: 'file-loader?name=img/[name]__[hash:base64:5].[ext]' }],
+                include: defaultInclude
+            },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                    'file-loader',
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                        },
+                    },
+                ],
                 include: defaultInclude
             },
             {

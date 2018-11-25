@@ -9,6 +9,16 @@ class snake extends playground {
 
     initControls() {
         console.log('snake');
+        
+        this.teams = [
+            {color:'red'},
+            {color:'blue'}
+        ];
+
+        this.movements = [];
+        this.teams.forEach(function (teamName) {
+            this.movements.push({team:teamName.color, movement:[]})
+        }.bind(this));
 
         $('body').css({margin:0,padding:0});
 
@@ -309,14 +319,67 @@ class snake extends playground {
         var updateSnakes = function () {
             schlangen.forEach (function(schlange) {
                 var hasGrown = fruchtKollision(schlange);
-                if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
+                console.log(hasGrown);
+                //if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
                     moveSnake(schlange);
-                }
+                //}
             });
         }
 
         var moveSnake = function (schlange) {
             // TODO : fetch inputs and move snakes
+            console.log('moveSnakeIsCalled')
+            this.movements.forEach( function (movementsForOneTeam)  {
+                schlangen.forEach( function (schlange) {
+                    console.log(movementsForOneTeam)
+                    if (colors[movementsForOneTeam] === schlange.color) {
+                        let m = getMostUsed(movementsForOneTeam.movement)
+                        console.log('m:' + m)
+                        if (m === 'up')
+                        {
+                            schlange.segments[0].direction = 0;
+                        } else if (m === 'down')
+                        {
+                            schlange.segments[0].direction = 90;
+                        } else if (m === 'left')
+                        {
+                            console.log('left');
+                            schlange.segments[0].direction = 180;
+                        } else if (m === 'right')
+                        {
+                            schlange.segments[0].direction = 270;
+                        }
+                        movementsForOneTeam.movements = [];
+                    }
+                })
+            }.bind(this))
+        }.bind(this)
+        var getMostUsed = function (movements) {
+            if (typeof(movements) !== 'undefined' && movements.length() > 0) {
+                movements.sort();
+                max = 1;
+                maxUsed = movements[0];
+                current = movements[0];
+                currentNumber = 1;
+                for (let i = 1; i < movements.length; i++) {
+                    if (movements[i] === current)
+                    {
+                        currentNumber++;
+                    } else
+                    {
+                        if (currentNumber > max) {
+                            max = currentNumber;
+                            maxUsed = current;
+                            current = movements[i];
+                            currentNumber = 1;
+                        }
+                    }
+                }
+                return maxUsed;
+            } else {
+                return "";
+            }
+            
             schlange.move();
         }
 
@@ -361,8 +424,6 @@ class snake extends playground {
 
         }
 
-
-
         var meinSpielfeld = new Grid(60,40);
         console.log('height'+meinSpielfeld.height);
         isRunning = true;
@@ -370,15 +431,24 @@ class snake extends playground {
         var gameLoopIntervalID = setInterval(function () {gameLoop()}, 1000);
 
 
-        var teams = [
-            {color:'red'},
-            {color:'blue'}
-        ];
 
-        initSchlangen(teams,meinSpielfeld);
+        initSchlangen(this.teams,meinSpielfeld);
+        meinSpielfeld.render();
+        console.log('ok');
 
 
 
+    }
+
+    receiveMessage (message)
+    {
+        let msg = JSON.parse(message.data);
+        console.log(msg);
+        this.movements.forEach (function(movementsOneTeam) {
+            if (movementsOneTeam.team === msg.team) {
+                movementsOneTeam.movements.push(msg.message);
+            }
+        })
 
     }
 }
