@@ -47,7 +47,8 @@ router.post('/', function (req, res) {
   }
 
   try {
-    ws.send("" + username + " logged in for team (" + userteam + ")");
+    ws.send(JSON.stringify({name: username, team: userteam}));
+    // ws.send("" + username + " logged in for team (" + userteam + ")");
   } catch(e) {
     console.log("Ooops, can't send to QR screen WS for username: " + username + " - continuing");
   }

@@ -3,6 +3,7 @@ class server {
     constructor (playgroundSocket) {
         this.playgroundSocket = playgroundSocket
         this.controllerSockets = new Map();
+        this.teams = new Map();
         playgroundSocket.on('close', () =>{
             playgroundSocket && playgroundSocket.destroy && playgroundSocket.destroy();
         });
@@ -17,8 +18,8 @@ class server {
         if(this.controllerSockets.has(controllerSocket)) {
             return;
         }
-        const id = Math.ceil(Math.random() * 10000000)
-        this.controllerSockets.set(controllerSocket, id)
+
+        this.controllerSockets.set(controllerSocket, {id: ''})
         controllerSocket.on('message', this.onControllerMessage(controllerSocket));
         controllerSocket.on('close', () =>{
             this.controllerSockets.delete(controllerSocket)
@@ -26,12 +27,18 @@ class server {
         });
     }
 
+    initUser (controllerSocket, id) {
+        let user = (global.users || []).filter((user) => user.client_id === id)[0]
+        this.controllerSockets.set(controllerSocket, user)
+        controllerSocket.send(JSON.stringify(user))
+    }
+
     onControllerMessage(controllerSocket)  {
         return (message) => {
             try {
                 let msg = JSON.parse(message)
                 if(msg.init) {
-                    this.controllerSockets.set(controllerSocket, msg.init)
+                    this.initUser(controllerSocket, msg.init)
                     return
                 }
             } catch(e){
@@ -48,6 +55,5 @@ class server {
         }
     }
 }
-
 
 module.exports =  server

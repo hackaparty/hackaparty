@@ -10,10 +10,13 @@ var radius = 600;
 var angleA = 0;
 var angleB = 180;
 var angleDelta = 0.5;
-var figureSize = 200;
+var figureSize = 100;
 var targetSize = 200;
-var speed = 10;
+var speed = 5;
+var fontsize = 100;
 
+var pointsA = 0;
+var pointsB = 0;
 
 class rabbitHead extends playground {
   constructor() {
@@ -23,6 +26,8 @@ class rabbitHead extends playground {
   initDisplay() {
     var app = new PIXI.Application(width, height, {backgroundColor: 0x1099bb});
     document.body.appendChild(app.view);
+
+    app.renderer.backgroundColor = 0x2E2E2E;
 
     // create a new Sprite from an image path
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
@@ -38,6 +43,13 @@ class rabbitHead extends playground {
     this.goalTeamB.width = targetSize;
     this.goalTeamB.height = targetSize;
     
+    this.pointsAText = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: fontsize, fill : 0xff1010, align : 'center'});
+    this.pointsAText.x = width / 2 - fontsize / 2 - 20;
+    this.pointsAText.y = 10;
+
+    this.pointsBText = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: fontsize, fill : 0x0000FF, align : 'center'});
+    this.pointsBText.x = width / 2 + fontsize / 2 + 20;
+    this.pointsBText.y = 10;
 
     // center the sprite's anchor point
     this.bunny.anchor.set(0.5);
@@ -49,6 +61,8 @@ class rabbitHead extends playground {
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
+    app.stage.addChild(this.pointsAText);
+    app.stage.addChild(this.pointsBText);
 
 
     // Listen for animate update
@@ -61,6 +75,7 @@ class rabbitHead extends playground {
 
       this.goalTeamB.x = width / 2  + radius * Math.cos(angleB * Math.PI / 180);
       this.goalTeamB.y = height / 2 + radius * Math.sin(angleB * Math.PI / 180);
+
       // just for fun, let's rotate mr rabbit a little
       // delta is 1 if running at 100% performance
       // creates frame-independent transformation
@@ -75,16 +90,19 @@ class rabbitHead extends playground {
    //   this.detectCollition(this.goalTeamB, this.bunny);
     }.bind(this));
   }
+
     informWinner(blueTeamWon, redTeamWon, app){
       if (blueTeamWon)
       {
-        alert("Blue team won");
         blueTeamWon = false;
+        pointsB++;
+        this.pointsBText.setText(""+pointsB);
         this.resetToDefaultPositions(app); 
       }
       else if (redTeamWon){
-        alert("Red team won");
         redTeamWon = false;
+        pointsA++;
+        this.pointsAText.setText(""+pointsA);
         this.resetToDefaultPositions(app); 
       }
     }
@@ -101,11 +119,13 @@ class rabbitHead extends playground {
       this.goalTeamB.y = app.screen.height / 2;
     }
 
-  detectCollition(objA,objB) {
-    if (objA.x < objB.x + objB.width &&
-      objA.x + objA.width > objB.x &&
-      objA.y < objB.y + objB.height &&
-      objA.height + objA.y > objB.y) {
+  detectCollition(objA, bunny) {
+    var bunnyX = bunny.x - bunny.width  / 2;
+    var bunnyY = bunny.y - bunny.height / 2;
+    if ((objA.x < bunnyX + bunny.width) &&
+      (objA.x + objA.width > bunnyX) &&
+      (objA.y <bunnyY + bunny.height) &&
+      (objA.height + objA.y > bunnyY)) {
         return true;
    }
    return false;
