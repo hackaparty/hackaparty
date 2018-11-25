@@ -15,7 +15,6 @@ class example extends controller {
         document.querySelector('.button.down').onmousedown = () => this.sendMessage('down')
         document.querySelector('.button.left').onmousedown = () => this.sendMessage('left')
         document.querySelector('.button.right').onmousedown = () => this.sendMessage('right')
-
         registerGyroskop(this.socket);
     }
 
