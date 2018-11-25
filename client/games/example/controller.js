@@ -11,11 +11,20 @@ class example extends controller {
     }
 
     initControls() {
-        document.querySelector('.button.up').onmousedown = () => this.sendMessage('up')
-        document.querySelector('.button.down').onmousedown = () => this.sendMessage('down')
-        document.querySelector('.button.left').onmousedown = () => this.sendMessage('left')
-        document.querySelector('.button.right').onmousedown = () => this.sendMessage('right')
+        document.querySelector('.button.up').onmousedown = () => this.activateButton('up')
+        document.querySelector('.button.down').onmousedown = () => this.activateButton('down')
+        document.querySelector('.button.left').onmousedown = () => this.activateButton('left')
+        document.querySelector('.button.right').onmousedown = () => this.activateButton('right')
         registerGyroskop(this.socket);
+    }
+
+    activateButton(dir)  {
+        console.log(dir)
+        document.querySelector('.button.' + dir).classList.add('active');
+        this.sendMessage(dir)
+        setTimeout(() => {
+            document.querySelector('.button.' + dir).classList.remove('active');
+        }, 1000)
     }
 
     receiveMessage(message) {
@@ -31,8 +40,6 @@ class example extends controller {
         document.querySelector('.team-name').innerHTML = team.toUpperCase()
         document.querySelector('.user-name').innerHTML = name
         document.querySelector('.team-icon').style = 'background-color:' + colors[team.toLowerCase()]
-        console.log(data)
-
     }
 }
 

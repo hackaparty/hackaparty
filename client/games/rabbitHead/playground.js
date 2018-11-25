@@ -11,8 +11,6 @@ import redTeamScream from './noise/man-scream-01.mp3'
 import blueTeamScream from './noise/woman-scream-01.mp3'
 import gameFinished from './noise/man-giggling-02.mp3'
 
-
-
 var height = $(window).height();
 var width = height;
 var radius = width/3;

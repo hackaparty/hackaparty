@@ -19,7 +19,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }],
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
                 include: defaultInclude
             },
             {
@@ -68,7 +68,7 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify('development')
         })
     ],
-    devtool: 'cheap-source-map',
+  //  devtool: 'cheap-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
         stats: {
