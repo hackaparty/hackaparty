@@ -100,16 +100,22 @@ class rabbitHead extends playground {
         this.resetToDefaultPositions(app); 
       }
 
-      if (pointsB > 5)
+      if (pointsB >= 5)
       {
         pointsA = 0;
         pointsB = 0;
-        alert("Blue team collected 10 rabbit heads and won!");
+        app.stage.removeChild(this.bunny);
+        app.stage.removeChild(this.goalTeamA);
+        app.stage.removeChild(this.goalTeamB);
+        app.renderer.backgroundColor = 0x0000ff;
       }
-      if (pointsA > 5){
+      if (pointsA >= 5){
         pointsA = 0;
-        pointsB = 0;        
-        alert("Red team collected 10 rabbit heads and won!");
+        pointsB = 0;
+        app.stage.removeChild(this.bunny);
+        app.stage.removeChild(this.goalTeamA);
+        app.stage.removeChild(this.goalTeamB);
+        app.renderer.backgroundColor = 0xff0000;
       }
     }
 
@@ -160,7 +166,6 @@ class rabbitHead extends playground {
 
   receiveMessage(message) {
     let dir = JSON.parse(message.data).message;
-    console.log(dir)
     if(dir === 'left'){
       if(this.bunny.x>0) {
         this.bunny.x -= speed;
