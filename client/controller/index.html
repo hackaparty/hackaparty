@@ -6,9 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 <body>
-    <button style="height: 50px" onclick="onOpenFullscreen()">fullscreen</button>
+
 <div id="play" style="background: pink">
-  <button style="height: 50px" onclick="onSyncStartPosition()">Sync start position</button>
+  <div class="unser-info">
+    <div class="team">
+      <span class="team-icon"></span>
+      <span class="team-name"></span>
+    </div>
+    <div class="user-name">
+
+    </div>
+  </div>
+
+  <button class="fullscreen" style="height: 50px" onclick="onOpenFullscreen()">fullscreen</button>
+  <button class="sync" style="height: 50px" onclick="onSyncStartPosition()">Sync start position</button>
 <!--  <div id="gyro-a">a</div>-->
   <div id="gyro-b">b</div>
   <div id="gyro-c">c</div>
@@ -17,6 +28,8 @@
   <div class="button down">Down</div>
   <div class="button left">Left</div>
   <div class="button right">Right</div>
+
+
 </div>
 
 <!--
@@ -29,6 +42,16 @@
 <style>
   body {
     user-select: none;
+  }
+  .fullscreen {
+    top: 0;
+    right: 0;
+    position: absolute;
+  }
+  .sync {
+    bottom: 0;
+    right: 0;
+    position: absolute;
   }
 
   .joystick{

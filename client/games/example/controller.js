@@ -18,6 +18,11 @@ class example extends controller {
 
         registerGyroskop(this.socket);
     }
+
+    receiveMessage(message) {
+        let data = JSON.parse(message.data)
+        console.log(data)
+    }
 }
 
 export default  example
