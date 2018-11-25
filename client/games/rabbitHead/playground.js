@@ -20,7 +20,7 @@ var angleB = 180;
 var angleDelta = 0.5;
 var figureSize = width/20;
 var targetSize = width/10;
-var speed = 5;
+var speed = 1;
 var rabbitSize = width/20;
 var maxPoints = 7;
 
