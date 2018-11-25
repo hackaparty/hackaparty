@@ -2,7 +2,11 @@ const express = require('express');
 const WebSocket = require('ws');
 const QRCode = require('qrcode');
 const app = express();
-const GamesServer = require('./server')
+const GamesServer = require('./server');
+
+var favicon = require('serve-favicon');
+var path = require('path');
+
 let gamesServer = null;
 
 const getGamesServer = (ws) => {
@@ -61,6 +65,7 @@ var login = require('./login');
 login.setWS(wss);
 app.use('/login', login.router);
 
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 
 app.listen(3000, function(){
