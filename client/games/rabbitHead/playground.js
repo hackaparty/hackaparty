@@ -1,7 +1,8 @@
 import bunnyImage from './images/pony-icon.png'
 import targetDummyA from './images/target-dummy-red.png'
 import targetDummyB from './images/target-dummy-blue.png'
-import rabbitHeadPng from './images/rabbit-head.png'
+import rabbitHeadBlue from './images/rabbithead_blue.png'
+import rabbitHeadRed from './images/rabbithead_red.png'
 import playground from '../playground'
 
 
@@ -101,19 +102,19 @@ class rabbitHead extends playground {
     }
     drawPoints(app) {
       if(pointsA > 0){
-        var rabbit = PIXI.Sprite.fromImage(rabbitHeadPng)
+        var rabbit = PIXI.Sprite.fromImage(rabbitHeadRed)
         rabbit.width = rabbitSize;
         rabbit.height = rabbitSize;
-        rabbit.x = rabbitSize * pointsA;
+        rabbit.x = rabbitSize * (pointsA - 1);
         rabbit.y = 10;
         app.stage.addChild(rabbit);
       }
       
       if(pointsB > 0){
-        var rabbit = PIXI.Sprite.fromImage(rabbitHeadPng)
+        var rabbit = PIXI.Sprite.fromImage(rabbitHeadBlue)
         rabbit.width = rabbitSize;
         rabbit.height = rabbitSize;
-        rabbit.x = width - rabbitSize - rabbitSize * pointsB;
+        rabbit.x = width - rabbitSize * pointsB;
         rabbit.y = 10;
         app.stage.addChild(rabbit);
       }
