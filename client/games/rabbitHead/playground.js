@@ -21,6 +21,7 @@ var figureSize = width/20;
 var targetSize = width/10;
 var speed = 5;
 var rabbitSize = width/20;
+var maxPoints = 7;
 
 var pointsA = 0;
 var pointsB = 0;
@@ -74,7 +75,6 @@ class rabbitHead extends playground {
     backgroundMusic.play();
 
 
-
     // Listen for animate update
     app.ticker.add(function (delta) { 
       angleA += angleDelta
@@ -120,7 +120,7 @@ class rabbitHead extends playground {
         this.resetToDefaultPositions(app); 
       }
 
-      if (pointsB >= 2)
+      if (pointsB >= maxPoints)
       {
         pointsA = 0;
         pointsB = 0;
@@ -136,7 +136,7 @@ class rabbitHead extends playground {
         var gameFinishedLaughter = new Audio(gameFinished);
         gameFinishedLaughter.play();
       }
-      if (pointsA >= 2){
+      if (pointsA >= maxPoints){
         pointsA = 0;
         pointsB = 0;
         app.stage.removeChild(this.bunny);
