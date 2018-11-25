@@ -13,9 +13,9 @@ export default function(controller) {
         sendEvents = true;
     }
 
-    var minDiff = 10,
-    minDiff2 = 20,
-    minDiff3 = 30;
+    var minDiff = 0.2,
+    minDiff2 = 0.4,
+    minDiff3 = 0.6;
 
     var offsetGamma = 0.0,
     offsetBeta = 0.0,
@@ -41,36 +41,40 @@ export default function(controller) {
         var gamma    = event.gamma - offsetGamma;
 
     //    gyroa.innerHTML = Math.round(alpha)+ " : " +Math.round(event.alpha) +" :  "+Math.round(offsetAlpha);
-    //     gyrob.innerHTML = Math.round(beta)+ " : " +Math.round(event.beta) +" :  "+Math.round(offsetBeta);
-    //     gyroc.innerHTML = Math.round(gamma)+ " : " +Math.round(event.gamma) +" :  "+Math.round(offsetAlpha);
+    //    gyrob.innerHTML = Math.round(beta) + " : " +Math.round(event.beta) +" :  "+Math.round(offsetBeta);
+    //    gyroc.innerHTML = Math.round(gamma) + " : " +Math.round(event.gamma) +" :  "+Math.round(offsetGamma);
         var eventCount = 1;
 
-        if (Math.abs(gamma) > minDiff) {
-            if(Math.abs(gamma) > minDiff2){
+
+
+        var gammaCorr = Math.sin(2 * gamma * Math.PI / 180);
+        if (Math.abs(gammaCorr) > minDiff) {
+            if(Math.abs(gammaCorr) > minDiff2){
                 eventCount++;
             }
             
-            if(Math.abs(gamma) > minDiff3){
+            if(Math.abs(gammaCorr) > minDiff3){
                 eventCount++;
             }
 
             for (var i = 0; i < eventCount; i++) {
                 
-                gamma > 0 ? controller.activateButton('up') : controller.activateButton('down');
+                gammaCorr > 0 ? controller.activateButton('up') : controller.activateButton('down');
             } 
         }
 
-        if (Math.abs(beta) > minDiff) {
-            if(Math.abs(beta) > minDiff2){
+      var betaCorr = Math.sin(beta * Math.PI / 180);
+        if (Math.abs(betaCorr) > minDiff) {
+            if(Math.abs(betaCorr) > minDiff2){
                 eventCount++;
             }
             
-            if(Math.abs(beta) > minDiff3){
+            if(Math.abs(betaCorr) > minDiff3){
                 eventCount++;
             }
 
             for (var i = 0; i < eventCount; i++) {
-                beta > 0 ? controller.activateButton('right') : controller.activateButton('left');
+                betaCorr > 0 ? controller.activateButton('right') : controller.activateButton('left');
             } 
         }
     }
