@@ -305,18 +305,22 @@ class snake extends playground {
         var updateSnakes = function () {
             schlangen.forEach (function(schlange) {
                 var hasGrown = fruchtKollision(schlange);
-                if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
+                console.log(hasGrown);
+                //if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
                     moveSnake(schlange);
-                }
+                //}
             });
         }
 
         var moveSnake = function (schlange) {
             // TODO : fetch inputs and move snakes
-            this.movements.forEach( function (movements)  {
+            console.log('moveSnakeIsCalled')
+            this.movements.forEach( function (movementsForOneTeam)  {
                 schlangen.forEach( function (schlange) {
+                    console.log(movementsForOneTeam)
                     if (colors[movementsForOneTeam] === schlange.color) {
-                        let m = getMostUsed(movementsForOneTeam.movements)
+                        let m = getMostUsed(movementsForOneTeam.movement)
+                        console.log('m:' + m)
                         if (m === 'up')
                         {
                             schlange.segments[0].direction = 0;
@@ -335,7 +339,7 @@ class snake extends playground {
                     }
                 })
             }.bind(this))
-        }
+        }.bind(this)
         var getMostUsed = function (movements) {
             if (typeof(movements) !== 'undefined' && movements.length() > 0) {
                 movements.sort();
@@ -357,6 +361,7 @@ class snake extends playground {
                         }
                     }
                 }
+                return maxUsed;
             } else {
                 return "";
             }
