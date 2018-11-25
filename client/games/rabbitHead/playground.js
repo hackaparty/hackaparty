@@ -6,6 +6,10 @@ import backgroundimg from './images/background.jpeg'
 import rabbitHeadRed from './images/rabbithead_red.png'
 import playground from '../playground'
 import $ from "jquery";
+import backgroundNoise from './noise/jungle-run-01.mp3'
+import redTeamScream from './noise/man-scream-01.mp3'
+import blueTeamScream from './noise/woman-scream-01.mp3'
+import gameFinished from './noise/man-giggling-02.mp3'
 
 
 
@@ -18,10 +22,7 @@ var angleDelta = 0.5;
 var figureSize = width/20;
 var targetSize = width/10;
 var speed = 5;
-var fontsize = 100;
-var rabbitSize = width/3;
-
-
+var rabbitSize = width/20;
 
 var pointsA = 0;
 var pointsB = 0;
@@ -34,7 +35,7 @@ class rabbitHead extends playground {
   initDisplay() {
     var app = new PIXI.Application(width, height, {backgroundColor: 0x1099bb});
     document.body.appendChild(app.view);
-
+    
     app.renderer.backgroundColor = 0x2E2E2E;
 
     this.background = PIXI.Sprite.fromImage(backgroundimg)
@@ -49,7 +50,6 @@ class rabbitHead extends playground {
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
     this.bunny.width = figureSize;
     this.bunny.height = figureSize;
-
     
     this.goalTeamA = PIXI.Sprite.fromImage(targetDummyA)
     this.goalTeamA.width = targetSize;
@@ -69,6 +69,10 @@ class rabbitHead extends playground {
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
+   
+    var backgroundMusic = new Audio(backgroundNoise);
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
 
 
     // Listen for animate update
@@ -103,25 +107,40 @@ class rabbitHead extends playground {
         blueTeamWon = false;
         pointsB++;
         this.drawPointB(app);
+		var blueTeamAudio = new Audio(blueTeamScream);
+        blueTeamAudio.play();
         this.resetToDefaultPositions(app); 
       }
       else if (redTeamWon){
         redTeamWon = false;
         pointsA++;
         this.drawPointA(app);
+        var redTeamAudio = new Audio(redTeamScream);
+        redTeamAudio.play();
         this.resetToDefaultPositions(app); 
       }
 
-      if (pointsB > 5)
+      if (pointsB >= 5)
       {
         pointsA = 0;
         pointsB = 0;
-        alert("Blue team collected 10 rabbit heads and won!");
+        app.stage.removeChild(this.bunny);
+        app.stage.removeChild(this.goalTeamA);
+        app.stage.removeChild(this.goalTeamB);
+        app.renderer.backgroundColor = 0x0000ff;
+        var gameFinishedLaughter = new Audio(gameFinished);
+        gameFinishedLaughter.play();
       }
-      if (pointsA > 5){
+      if (pointsA >= 5){
         pointsA = 0;
+        pointsB = 0;
+        app.stage.removeChild(this.bunny);
+        app.stage.removeChild(this.goalTeamA);
+        app.stage.removeChild(this.goalTeamB);
+        app.renderer.backgroundColor = 0xff0000;
         pointsB = 0;        
-        alert("Red team collected 10 rabbit heads and won!");
+        var gameFinishedLaughter = new Audio(gameFinished);
+        gameFinishedLaughter.play(); 
       }
     }
     drawPointA(app) {
