@@ -3,8 +3,17 @@
     <head>
         <script>
         var exampleSocket = new WebSocket("ws://" + location.hostname + ":3001/startup");
+        var footer;
+        function renderWithColor(color, text) {
+            return "<span style='color:" + color+ "'>" + text + "</span>";
+        }
         exampleSocket.onmessage = function(event) {
-            console.log("event" + event.data);
+            // console.log("event" + event.data);
+            var data = JSON.parse(event.data);
+            var msg = "" +
+                renderWithColor(data.team, data.name) + " logged in for the " + 
+                renderWithColor(data.team, data.team) + " team!";
+            footer.innerHTML = (msg + "<br/>" + footer.innerHTML);
         }        
         exampleSocket.onclose = function(event) {
             console.log("websocket closed");
@@ -43,9 +52,12 @@
             .moused {
                 background-color: lightgray;
             }
+            .footer {
+                font-size: 120%;
+            }
         </style>
     </head>
-    <body>
+    <body>           
         <img src="/qrcode.png" />
         <div>
             <div class="center">
@@ -53,7 +65,11 @@
                     Start!
                 </div>
             </div>
+            <div class="footer">
+            </div>
         </div>
+
+
         <script>
             var button = document.getElementsByClassName('button')[0];
             button.addEventListener('click', function(event) {
@@ -66,6 +82,7 @@
             button.addEventListener('mouseleave', function(event) {
                 button.classList.remove("moused")
             });
+            footer = document.getElementsByClassName('footer')[0];  
         </script>
     </body>
 </html>
