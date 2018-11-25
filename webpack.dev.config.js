@@ -80,6 +80,7 @@ module.exports = {
         '/startup': 'http://localhost:3000/',
         '/login': 'http://localhost:3000/',
         '/qrcode.png': 'http://localhost:3000/qrcode.png',
+        '/favicon.ico': 'http://localhost:3000/'
       }
     }
 }
