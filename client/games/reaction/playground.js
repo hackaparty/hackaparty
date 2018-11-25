@@ -16,6 +16,8 @@ class reaction extends playground {
     this.direction1 = 0;
     this.direction2 = 0;
     this.obstacleSpeed = obstacleStartSpeed;
+    this.scoreRed = 0;
+    this.scoreBlue = 0;
   }
 
   initDisplay() {
@@ -30,8 +32,21 @@ class reaction extends playground {
     this.addPlayer(2 * playerSize, 0xFE6A6A);
     this.addPlayer(dimY - 2 * playerSize, 0x72D7D1);
 
+    let scoreRedText = new PIXI.Text(0,{fontFamily : 'Helvetia', fontSize: 48, fill : 0xFE6A6A, align : 'center'});
+    let scoreBlueText = new PIXI.Text(0,{fontFamily : 'Helvetia', fontSize: 48, fill : 0x72D7D1, align : 'center'});
+
+    scoreRedText.anchor.x = 1;
+
+    scoreRedText.y = 10;
+    scoreBlueText.y = 10;
+    scoreRedText.x = dimX / 2 - 20;
+    scoreBlueText.x = dimX / 2 + 20;
+
     app.stage.addChild(this.players);
     app.stage.addChild(this.obstacles);
+
+    app.stage.addChild(scoreBlueText);
+    app.stage.addChild(scoreRedText);
 
     app.ticker.add(function (delta) {
       this.obstacleSpeed += obstacleSpeedIncrease * delta;
@@ -63,14 +78,26 @@ class reaction extends playground {
         let player1 = this.players.children[0];
         let player2 = this.players.children[1];
         if(Math.abs(obstacle.x - player1.x) < (obstacleSize + playerSize) / 2){
+          let collision = false
           if(Math.abs(obstacle.y - player1.y) < (obstacleSize + playerSize) / 2){
-            alert("collision with player1!")
+            collision = true;
+            this.scoreRed -= 1;
+            scoreRedText.text = this.scoreRed;
           }
           if(Math.abs(obstacle.y - player2.y) < (obstacleSize + playerSize) / 2){
-            alert("collision with player2!")
+            collision = true;
+            this.scoreBlue -= 1;
+            scoreBlueText.text = this.scoreBlue;
+          }
+
+          if(collision){
+            this.obstacles.removeChild(obstacle);
           }
         }
       });
+
+      // Score
+
 
     }.bind(this));
   }
