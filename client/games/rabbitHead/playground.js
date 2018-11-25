@@ -2,21 +2,27 @@ import bunnyImage from './images/pony-icon.png'
 import targetDummyA from './images/target-dummy-red.png'
 import targetDummyB from './images/target-dummy-blue.png'
 import rabbitHeadBlue from './images/rabbithead_blue.png'
+import backgroundimg from './images/background.jpeg'
 import rabbitHeadRed from './images/rabbithead_red.png'
 import playground from '../playground'
+import $ from "jquery";
+import backgroundNoise from './noise/jungle-run-01.mp3'
+import redTeamScream from './noise/man-scream-01.mp3'
+import blueTeamScream from './noise/woman-scream-01.mp3'
+import gameFinished from './noise/laughter-2.mp3'
 
 
-var width = 2000;
-var height = 2000;
-var radius = 600;
+
+var height = $(window).height();
+var width = height;
+var radius = width/3;
 var angleA = 0;
 var angleB = 180;
 var angleDelta = 0.5;
-var figureSize = 100;
-var targetSize = 200;
+var figureSize = width/20;
+var targetSize = width/10;
 var speed = 5;
-var fontsize = 100;
-var rabbitSize = 100;
+var rabbitSize = width/20;
 
 var pointsA = 0;
 var pointsB = 0;
@@ -29,14 +35,24 @@ class rabbitHead extends playground {
   initDisplay() {
     var app = new PIXI.Application(width, height, {backgroundColor: 0x1099bb});
     document.body.appendChild(app.view);
-
+    
     app.renderer.backgroundColor = 0x2E2E2E;
+   
+    var backgroundMusic = new Audio(backgroundNoise);
+    backgroundMusic.play();
+
+    this.background = PIXI.Sprite.fromImage(backgroundimg)
+    this.background.x = 0;
+    this.background.y = 0;
+    this.background.width = width;
+    this.background.height = height;
+
+    app.stage.addChild(this.background );
 
     // create a new Sprite from an image path
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
     this.bunny.width = figureSize;
     this.bunny.height = figureSize;
-
     
     this.goalTeamA = PIXI.Sprite.fromImage(targetDummyA)
     this.goalTeamA.width = targetSize;
@@ -89,14 +105,17 @@ class rabbitHead extends playground {
       {
         blueTeamWon = false;
         pointsB++;
-        this.drawPoints(app);
-       // this.pointsBText.setText(""+pointsB);
+        this.drawPointB(app);
+		var blueTeamAudio = new Audio(blueTeamScream);
+        blueTeamAudio.play();
         this.resetToDefaultPositions(app); 
       }
       else if (redTeamWon){
         redTeamWon = false;
         pointsA++;
-        this.drawPoints(app);
+        this.drawPointA(app);
+        var redTeamAudio = new Audio(redTeamScream);
+        redTeamAudio.play();
         this.resetToDefaultPositions(app); 
       }
 
@@ -108,6 +127,8 @@ class rabbitHead extends playground {
         app.stage.removeChild(this.goalTeamA);
         app.stage.removeChild(this.goalTeamB);
         app.renderer.backgroundColor = 0x0000ff;
+        var gameFinishedLaughter = new Audio(gameFinished);
+        gameFinishedLaughter.play();
       }
       if (pointsA >= 5){
         pointsA = 0;
@@ -116,10 +137,12 @@ class rabbitHead extends playground {
         app.stage.removeChild(this.goalTeamA);
         app.stage.removeChild(this.goalTeamB);
         app.renderer.backgroundColor = 0xff0000;
+        pointsB = 0;        
+        var gameFinishedLaughter = new Audio(gameFinished);
+        gameFinishedLaughter.play(); 
       }
     }
-
-    drawPoints(app) {
+    drawPointA(app) {
       if(pointsA > 0){
         var rabbit = PIXI.Sprite.fromImage(rabbitHeadRed)
         rabbit.width = rabbitSize;
@@ -128,7 +151,8 @@ class rabbitHead extends playground {
         rabbit.y = 10;
         app.stage.addChild(rabbit);
       }
-      
+    }
+    drawPointB(app) {
       if(pointsB > 0){
         var rabbit = PIXI.Sprite.fromImage(rabbitHeadBlue)
         rabbit.width = rabbitSize;

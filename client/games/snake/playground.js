@@ -54,7 +54,8 @@ class snake extends playground {
         Grid.prototype.render = function(){
 
             segmentSize = Math.round(screenHeight / this.height);
-            ctx.clearRect(0,0,screenWidth,screenHeight);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0,0,segmentSize*this.width,segmentSize*this.height);
             if (canvas.getContext) {
                 for (var x = 0; x < this.width; x++) {
                     for (var y = 0; y < this.height; y++) {
@@ -198,34 +199,46 @@ class snake extends playground {
         {
             //Kopf bewegen
             var kopf = this.segments[0];
-
+            var movePossible = false;
             switch (kopf.direction) {
                 case 0:
-                    kopf.y -= 1;
+                    if(kopf.y - 1 >= 0) {
+                        kopf.y -= 1;
+                        movePossible = true;
+                    }
                     break;
                 case 90:
-                    kopf.x += 1;
+                    if(kopf.x + 1 < meinSpielfeld.width) {
+                        kopf.x += 1;
+                        movePossible = true;
+                    }
                     break;
                 case 180:
-                    kopf.y += 1;
+                    if(kopf.y + 1 < meinSpielfeld.height) {
+                        kopf.y += 1;
+                        movePossible = true;
+                    }
                     break;
                 case 270:
-                    kopf.x -= 1;
+                    if(kopf.x - 1 >= 0) {
+                        kopf.x -= 1;
+                        movePossible = true;
+                    }
                     break;
             }
-            
-            //Alle Teile außer Kopfbewegen
-            for(var i = 1; i < this.segments.length; i++) {
-                this.segments[i].x = this.segments[i-1].altX;
-                this.segments[i].y = this.segments[i-1].altY;
-                //Neue "Alt" Pos setzten
-                this.segments[i].altX = this.segments[i].x;
-                this.segments[i].altY = this.segments[i].y;
+            if(movePossible) {
+                //Alle Teile außer Kopfbewegen
+                for (var i = 1; i < this.segments.length; i++) {
+                    this.segments[i].x = this.segments[i - 1].altX;
+                    this.segments[i].y = this.segments[i - 1].altY;
+                    //Neue "Alt" Pos setzten
+                    this.segments[i].altX = this.segments[i].x;
+                    this.segments[i].altY = this.segments[i].y;
+                }
+                //Neue "Alt" Pos für Kopf setzten
+                this.segments[0].altX = this.segments[0].x;
+                this.segments[0].altY = this.segments[0].y;
             }
-            //Neue "Alt" Pos für Kopf setzten
-            this.segments[0].altX = this.segments[0].x;
-            this.segments[0].altY = this.segments[0].y;
-
         }
 
         var fruechte = [];
@@ -281,7 +294,8 @@ class snake extends playground {
 
         var gameLoop = function () {
             if (!isRunning) {
-                clearInterval(gameLoopIntervalId);
+                clearInterval(gameLoopIntervalID);
+                console.log("Test");
                 gameEnded();
             }
 
@@ -373,7 +387,7 @@ class snake extends playground {
             // TODO : getWinner and forward to winning screen
 
             let maxPoints = 0;
-            let maxPointsSnake;
+            let maxPointsSnake = schlangen[0];
             schlangen.forEach( function(schlange){
                 if(schlange.points > maxPoints) // TODO : fix multiple winners
                 {
