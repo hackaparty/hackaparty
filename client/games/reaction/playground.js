@@ -7,8 +7,8 @@ const speed = 5;
 const playerSize = 50;
 
 const obstacleSize = 20;
-const obstacleStartSpeed = 7;
-const obstacleSpeedIncrease = 0.002;
+const obstacleStartSpeed = 5;
+const obstacleSpeedIncrease = 0.001;
 
 class reaction extends playground {
   constructor() {
@@ -70,6 +70,8 @@ class reaction extends playground {
         obstacle.x -= obstacle.speed * delta;
         if(obstacle.x < -obstacleSize * 2){
           this.obstacles.removeChild(obstacle);
+          this.scoreBlue += 1;
+          this.scoreRed += 1;
         }
       });
 
@@ -82,12 +84,10 @@ class reaction extends playground {
           if(Math.abs(obstacle.y - player1.y) < (obstacleSize + playerSize) / 2){
             collision = true;
             this.scoreRed -= 1;
-            scoreRedText.text = this.scoreRed;
           }
           if(Math.abs(obstacle.y - player2.y) < (obstacleSize + playerSize) / 2){
             collision = true;
             this.scoreBlue -= 1;
-            scoreBlueText.text = this.scoreBlue;
           }
 
           if(collision){
@@ -97,6 +97,9 @@ class reaction extends playground {
       });
 
       // Score
+      scoreBlueText.text = this.scoreBlue;
+      scoreRedText.text = this.scoreRed;
+
 
 
     }.bind(this));
@@ -136,7 +139,6 @@ class reaction extends playground {
     let message = JSON.parse(messageStr.data);
     let dir = message.message;
     let team = message.player.team === "red" ? 0 : 1;
-    console.log(message);
 
     if(dir === 'up'){
       team === 0 ? this.direction1 = 1 : this.direction2 = 1;
