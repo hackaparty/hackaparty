@@ -99,7 +99,20 @@ class rabbitHead extends playground {
         this.drawPoints(app);
         this.resetToDefaultPositions(app); 
       }
+
+      if (pointsB > 5)
+      {
+        pointsA = 0;
+        pointsB = 0;
+        alert("Blue team collected 10 rabbit heads and won!");
+      }
+      if (pointsA > 5){
+        pointsA = 0;
+        pointsB = 0;        
+        alert("Red team collected 10 rabbit heads and won!");
+      }
     }
+
     drawPoints(app) {
       if(pointsA > 0){
         var rabbit = PIXI.Sprite.fromImage(rabbitHeadRed)

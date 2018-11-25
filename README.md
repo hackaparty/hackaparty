@@ -1,16 +1,11 @@
 # Hackaparty
 
-Getting the application:
+Getting the application from Docker Hub:
 ```
 docker pull hackaparty/hackaparty
 ```
 
-Running locally:
-```
-docker run -e DANGEROUSLY_DISABLE_HOST_CHECK -p 8080:8080 -p 3000:3000 -p 3001:3001 -d hackaparty/hackaparty ./run http://<IP>:8080/login
-```
-
-Running on Amazon in Docker:
+Running on Amazon EC2 in Docker:
 ```
 docker run -e DANGEROUSLY_DISABLE_HOST_CHECK -p 8080:8080 -p 3000:3000 -p 3001:3001 -d hackaparty/hackaparty ./run http://`wget -qO- https://ipecho.net/plain ; echo`:8080/login
 ```
@@ -21,10 +16,15 @@ docker run -e DANGEROUSLY_DISABLE_HOST_CHECK -p 8080:8080 -p 3000:3000 -p 3001:3
 ## Build for local Docker
 ```
 docker build -t abc/hackaparty .
+docker run -e DANGEROUSLY_DISABLE_HOST_CHECK -p 8080:8080 -p 3000:3000 -p 3001:3001 -d abc/hackaparty ./run http://<IP>:8080/login
+```
 ```
 
-## Run locally
+## Run local environment
 ```
+git clone https://github.com/hackaparty/hackaparty
+cd hackaparty
+npm install
 ./run http://IP:8080/login
 ```
 
