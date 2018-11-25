@@ -21,7 +21,19 @@ class example extends controller {
 
     receiveMessage(message) {
         let data = JSON.parse(message.data)
+        let {team, name} = data
+        const colors = {
+            red: '#FE6A6A',
+            blue: '#72D7D1',
+            yellow: '#FBF34C',
+            green: '#02f410'
+        }
+
+        document.querySelector('.team-name').innerHTML = team.toUpperCase()
+        document.querySelector('.user-name').innerHTML = name
+        document.querySelector('.team-icon').style = 'background-color:' + colors[team.toLowerCase()]
         console.log(data)
+
     }
 }
 
