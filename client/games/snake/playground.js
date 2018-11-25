@@ -27,6 +27,11 @@ class snake extends playground {
 
         var isRunning;
 
+        var movements;
+        teams.forEach(function (teamName) {
+            movements.push({team:teamName.color, movement:[]})
+        })
+
         var colors = {
             'green':'#00ff00',
             'red':'#ff0000',
@@ -288,6 +293,53 @@ class snake extends playground {
 
         var moveSnake = function (schlange) {
             // TODO : fetch inputs and move snakes
+            movements.forEach( function (movementsForOneTeam) {
+                schlangen.forEach( function (schlange) {
+                    if (colors[movementsForOneTeam] === schlange.color) {
+                        let m = getMostUsed(movementsForOneTeam.movements)
+                        if (m === 'up')
+                        {
+                            schlange.segments[0].direction = 0;
+                        } else if (m === 'down')
+                        {
+                            schlange.segments[0].direction = 90;
+                        } else if (m === 'left')
+                        {
+                            schlange.segments[0].direction = 180;
+                        } else if (m === 'right')
+                        {
+                            schlange.segments[0].direction = 270;
+                        }
+                        movementsForOneTeam.movements = [];
+                    }
+                })
+            })
+        }
+        var getMostUsed = function (movements) {
+            if (typeof(movements) !== 'undefined' && movements.length() > 0) {
+                movements.sort();
+                max = 1;
+                maxUsed = movements[0];
+                current = movements[0];
+                currentNumber = 1;
+                for (let i = 1; i < movements.length; i++) {
+                    if (movements[i] === current)
+                    {
+                        currentNumber++;
+                    } else
+                    {
+                        if (currentNumber > max) {
+                            max = currentNumber;
+                            maxUsed = current;
+                            current = movements[i];
+                            currentNumber = 1;
+                        }
+                    }
+                }
+            } else {
+                return "";
+            }
+            
         }
 
         var gameEnded = function () {
@@ -323,8 +375,6 @@ class snake extends playground {
 
         }
 
-
-
         var meinSpielfeld = new Grid(60,40);
         console.log('height'+meinSpielfeld.height);
         isRunning = true
@@ -338,6 +388,18 @@ class snake extends playground {
         ];
 
         initSchlangen(teams,meinSpielfeld);
+    }
+
+    receiveMessage (message)
+    {
+        let msg = JSON.parse(message.data);
+        console.log(msg);
+        movements.forEach (function(movementsOneTeam) {
+            if (movementsOneTeam.team === msg.team) {
+                movementsOneTeam.movements.push(msg.message);
+            }
+        })
+
     }
 }
 
