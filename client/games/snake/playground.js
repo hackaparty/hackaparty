@@ -9,6 +9,16 @@ class snake extends playground {
 
     initControls() {
         console.log('snake');
+        
+        this.teams = [
+            {color:'red'},
+            {color:'blue'}
+        ];
+
+        this.movements = [];
+        this.teams.forEach(function (teamName) {
+            this.movements.push({team:teamName.color, movement:[]})
+        }.bind(this));
 
         $('body').css({margin:0,padding:0});
 
@@ -44,7 +54,7 @@ class snake extends playground {
         Grid.prototype.render = function(){
 
             segmentSize = Math.round(screenHeight / this.height);
-
+            ctx.clearRect(0,0,screenWidth,screenHeight);
             if (canvas.getContext) {
                 for (var x = 0; x < this.width; x++) {
                     for (var y = 0; y < this.height; y++) {
@@ -65,18 +75,6 @@ class snake extends playground {
             this.x = startX;
             this.y = startY;
             this.segments = [];
-        }
-
-        Snake.prototype.go = function() {
-            // Rotate wheels
-        }
-
-        Snake.prototype.stop = function() {
-            // Apply brake pads
-        }
-
-        Snake.prototype.getPoints = function() {
-            return this.points;
         }
 
 
@@ -125,6 +123,7 @@ class snake extends playground {
                         break;
                 }
             }
+            this.segments[0].direction = this.startDirection;
         }
 
         Snake.prototype.render = function(){
@@ -143,8 +142,6 @@ class snake extends playground {
             var vertikale = Math.round(grid.height/2);
             console.log(teams.length);
             for(var t = 0; t < teams.length; t++) {
-                //console.log('x');
-                //console.log(2,teams[i].color,abstand*(i+1),vertikale,0);
                 let schlange = new Snake(2,teams[t].color,(abstand*(t+1)),vertikale,0);
                 schlange.birth();
                 schlange.render();
@@ -201,20 +198,22 @@ class snake extends playground {
         {
             //Kopf bewegen
             var kopf = this.segments[0];
+
             switch (kopf.direction) {
                 case 0:
-                    kopf.y += 1;
+                    kopf.y -= 1;
                     break;
                 case 90:
                     kopf.x += 1;
                     break;
                 case 180:
-                    kopf.y -= 1;
+                    kopf.y += 1;
                     break;
                 case 270:
                     kopf.x -= 1;
                     break;
             }
+            
             //Alle Teile außer Kopfbewegen
             for(var i = 1; i < this.segments.length; i++) {
                 this.segments[i].x = this.segments[i-1].altX;
@@ -224,8 +223,9 @@ class snake extends playground {
                 this.segments[i].altY = this.segments[i].y;
             }
             //Neue "Alt" Pos für Kopf setzten
-            schlangen[s].segments[0].altX = schlangen[s].segments[0].x;
-            schlangen[s].segments[0].altY = schlangen[s].segments[0].y;
+            this.segments[0].altX = this.segments[0].x;
+            this.segments[0].altY = this.segments[0].y;
+
         }
 
         var fruechte = [];
@@ -237,19 +237,34 @@ class snake extends playground {
 
         var fruechteErstellen = function() {
             if(fruechte.length < 10) {
-                let x = Math.round(Math.random()*(meinSpielfeld.width));
-                let y = Math.round(Math.random()*(meinSpielfeld.height));
-                let punkte = Math.round(Math.random()*40);
-
+                let x = parseInt(Math.random()*(meinSpielfeld.width + 1));
+                let y = parseInt(Math.random()*(meinSpielfeld.height + 1));
+                var punkte = Math.random();
+                if(punkte < 0.3) {
+                    punkte = 10;
+                } else if(punkte < 0.6) {
+                    punkte = 20;
+                } else {
+                    punkte = 30;
+                }
                 fruechte.push(new Frucht(x, y, punkte));
             }
         }
 
         Frucht.prototype.render = function() {
-            ctx.fillStyle = "#000000";
+            if(this.punkte == 10) {
+                ctx.fillStyle = "#000000";
+            } else if(this.punkte == 20) {
+                ctx.fillStyle = "#00FFF0";
+            } else {
+                ctx.fillStyle = "#f0db00";
+            }
+
             let appleSize = segmentSize*(this.punkte/40)
-            ctx.fillRect(this.x + segmentSize/2- appleSize/2, this.y + segmentSize/2- appleSize/2,
-                appleSize, appleSize);
+            ctx.fillRect(this.x * segmentSize, this.y*segmentSize ,
+                segmentSize, segmentSize);
+
+
         }
 
         var isSnakeOnCoordinates = function (x, y){
@@ -269,10 +284,13 @@ class snake extends playground {
                 clearInterval(gameLoopIntervalId);
                 gameEnded();
             }
-            updateSnakes();
+
             if (Math.random() < 0.2) {
                 fruechteErstellen ()
             }
+
+            updateSnakes();
+
 
             meinSpielfeld.render();
             for(var s = 0; s < schlangen.length; s++) {
@@ -286,15 +304,69 @@ class snake extends playground {
 
         var updateSnakes = function () {
             schlangen.forEach (function(schlange) {
-                let hasGrown = fruchtKollision(schlange)
-                if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
+                var hasGrown = fruchtKollision(schlange);
+                console.log(hasGrown);
+                //if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
                     moveSnake(schlange);
-                }
+                //}
             });
         }
 
         var moveSnake = function (schlange) {
             // TODO : fetch inputs and move snakes
+            console.log('moveSnakeIsCalled')
+            this.movements.forEach( function (movementsForOneTeam)  {
+                schlangen.forEach( function (schlange) {
+                    console.log(movementsForOneTeam)
+                    if (colors[movementsForOneTeam] === schlange.color) {
+                        let m = getMostUsed(movementsForOneTeam.movement)
+                        console.log('m:' + m)
+                        if (m === 'up')
+                        {
+                            schlange.segments[0].direction = 0;
+                        } else if (m === 'down')
+                        {
+                            schlange.segments[0].direction = 90;
+                        } else if (m === 'left')
+                        {
+                            console.log('left');
+                            schlange.segments[0].direction = 180;
+                        } else if (m === 'right')
+                        {
+                            schlange.segments[0].direction = 270;
+                        }
+                        movementsForOneTeam.movements = [];
+                    }
+                })
+            }.bind(this))
+        }.bind(this)
+        var getMostUsed = function (movements) {
+            if (typeof(movements) !== 'undefined' && movements.length() > 0) {
+                movements.sort();
+                max = 1;
+                maxUsed = movements[0];
+                current = movements[0];
+                currentNumber = 1;
+                for (let i = 1; i < movements.length; i++) {
+                    if (movements[i] === current)
+                    {
+                        currentNumber++;
+                    } else
+                    {
+                        if (currentNumber > max) {
+                            max = currentNumber;
+                            maxUsed = current;
+                            current = movements[i];
+                            currentNumber = 1;
+                        }
+                    }
+                }
+                return maxUsed;
+            } else {
+                return "";
+            }
+            
+            schlange.move();
         }
 
         var gameEnded = function () {
@@ -338,8 +410,6 @@ class snake extends playground {
 
         }
 
-
-
         var meinSpielfeld = new Grid(60,40);
         console.log('height'+meinSpielfeld.height);
         isRunning = true;
@@ -347,15 +417,24 @@ class snake extends playground {
         var gameLoopIntervalID = setInterval(function () {gameLoop()}, 1000);
 
 
-        var teams = [
-            {color:'red'},
-            {color:'blue'}
-        ];
 
-        initSchlangen(teams,meinSpielfeld);
+        initSchlangen(this.teams,meinSpielfeld);
+        meinSpielfeld.render();
+        console.log('ok');
 
 
 
+    }
+
+    receiveMessage (message)
+    {
+        let msg = JSON.parse(message.data);
+        console.log(msg);
+        this.movements.forEach (function(movementsOneTeam) {
+            if (movementsOneTeam.team === msg.team) {
+                movementsOneTeam.movements.push(msg.message);
+            }
+        })
 
     }
 }

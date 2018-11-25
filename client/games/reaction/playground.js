@@ -7,14 +7,17 @@ const speed = 5;
 const playerSize = 50;
 
 const obstacleSize = 20;
-const obstacleStartSpeed = 7;
-const obstacleSpeedIncrease = 0.002;
+const obstacleStartSpeed = 5;
+const obstacleSpeedIncrease = 0.001;
 
 class reaction extends playground {
   constructor() {
     super()
-    this.direction = 0;
+    this.direction1 = 0;
+    this.direction2 = 0;
     this.obstacleSpeed = obstacleStartSpeed;
+    this.scoreRed = 0;
+    this.scoreBlue = 0;
   }
 
   initDisplay() {
@@ -29,16 +32,29 @@ class reaction extends playground {
     this.addPlayer(2 * playerSize, 0xFE6A6A);
     this.addPlayer(dimY - 2 * playerSize, 0x72D7D1);
 
+    let scoreRedText = new PIXI.Text(0,{fontFamily : 'Helvetia', fontSize: 48, fill : 0xFE6A6A, align : 'center'});
+    let scoreBlueText = new PIXI.Text(0,{fontFamily : 'Helvetia', fontSize: 48, fill : 0x72D7D1, align : 'center'});
+
+    scoreRedText.anchor.x = 1;
+
+    scoreRedText.y = 10;
+    scoreBlueText.y = 10;
+    scoreRedText.x = dimX / 2 - 20;
+    scoreBlueText.x = dimX / 2 + 20;
+
     app.stage.addChild(this.players);
     app.stage.addChild(this.obstacles);
+
+    app.stage.addChild(scoreBlueText);
+    app.stage.addChild(scoreRedText);
 
     app.ticker.add(function (delta) {
       this.obstacleSpeed += obstacleSpeedIncrease * delta;
 
-      this.players.children.forEach((player) => {
-        player.y -= speed * this.direction * delta;
-        player.y = Math.max(playerSize / 2, Math.min(dimY - playerSize / 2, player.y));
-      });
+      this.players.children[0].y -= speed * this.direction1 * delta;
+      this.players.children[0].y = Math.max(playerSize / 2, Math.min(dimY - playerSize / 2, this.players.children[0].y));
+      this.players.children[1].y -= speed * this.direction2 * delta;
+      this.players.children[1].y = Math.max(playerSize / 2, Math.min(dimY - playerSize / 2, this.players.children[1].y));
 
       // Spawn obstacles
       if(this.obstacles.children.length < 10){
@@ -54,6 +70,8 @@ class reaction extends playground {
         obstacle.x -= obstacle.speed * delta;
         if(obstacle.x < -obstacleSize * 2){
           this.obstacles.removeChild(obstacle);
+          this.scoreBlue += 1;
+          this.scoreRed += 1;
         }
       });
 
@@ -62,14 +80,27 @@ class reaction extends playground {
         let player1 = this.players.children[0];
         let player2 = this.players.children[1];
         if(Math.abs(obstacle.x - player1.x) < (obstacleSize + playerSize) / 2){
+          let collision = false
           if(Math.abs(obstacle.y - player1.y) < (obstacleSize + playerSize) / 2){
-            alert("collision with player1!")
+            collision = true;
+            this.scoreRed -= 1;
           }
           if(Math.abs(obstacle.y - player2.y) < (obstacleSize + playerSize) / 2){
-            alert("collision with player2!")
+            collision = true;
+            this.scoreBlue -= 1;
+          }
+
+          if(collision){
+            this.obstacles.removeChild(obstacle);
           }
         }
       });
+
+      // Score
+      scoreBlueText.text = this.scoreBlue;
+      scoreRedText.text = this.scoreRed;
+
+
 
     }.bind(this));
   }
@@ -104,14 +135,16 @@ class reaction extends playground {
     this.obstacles.addChild(obstacle);
   }
 
-  receiveMessage(message){
-    let dir = JSON.parse(message.data).message;
+  receiveMessage(messageStr){
+    let message = JSON.parse(messageStr.data);
+    let dir = message.message;
+    let team = message.player.team === "red" ? 0 : 1;
 
     if(dir === 'up'){
-      this.direction = 1;
+      team === 0 ? this.direction1 = 1 : this.direction2 = 1;
     }
     else if(dir === 'down'){
-      this.direction = -1;
+      team === 0 ? this.direction1 = -1 : this.direction2 = -1;
     }
   }
 }
