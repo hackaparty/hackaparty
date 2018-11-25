@@ -2,6 +2,7 @@ import bunnyImage from './images/pony-icon.png'
 import targetDummyA from './images/target-dummy-red.png'
 import targetDummyB from './images/target-dummy-blue.png'
 import rabbitHeadBlue from './images/rabbithead_blue.png'
+import backgroundimg from './images/background.jpeg'
 import rabbitHeadRed from './images/rabbithead_red.png'
 import playground from '../playground'
 
@@ -31,6 +32,14 @@ class rabbitHead extends playground {
     document.body.appendChild(app.view);
 
     app.renderer.backgroundColor = 0x2E2E2E;
+
+    this.background = PIXI.Sprite.fromImage(backgroundimg)
+    this.background.x = 0;
+    this.background.y = 0;
+    this.background.width = width;
+    this.background.height = height;
+
+    app.stage.addChild(this.background );
 
     // create a new Sprite from an image path
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
@@ -89,14 +98,13 @@ class rabbitHead extends playground {
       {
         blueTeamWon = false;
         pointsB++;
-        this.drawPoints(app);
-       // this.pointsBText.setText(""+pointsB);
+        this.drawPointB(app);
         this.resetToDefaultPositions(app); 
       }
       else if (redTeamWon){
         redTeamWon = false;
         pointsA++;
-        this.drawPoints(app);
+        this.drawPointA(app);
         this.resetToDefaultPositions(app); 
       }
 
@@ -112,8 +120,7 @@ class rabbitHead extends playground {
         alert("Red team collected 10 rabbit heads and won!");
       }
     }
-
-    drawPoints(app) {
+    drawPointA(app) {
       if(pointsA > 0){
         var rabbit = PIXI.Sprite.fromImage(rabbitHeadRed)
         rabbit.width = rabbitSize;
@@ -122,7 +129,8 @@ class rabbitHead extends playground {
         rabbit.y = 10;
         app.stage.addChild(rabbit);
       }
-      
+    }
+    drawPointB(app) {
       if(pointsB > 0){
         var rabbit = PIXI.Sprite.fromImage(rabbitHeadBlue)
         rabbit.width = rabbitSize;
@@ -160,7 +168,6 @@ class rabbitHead extends playground {
 
   receiveMessage(message) {
     let dir = JSON.parse(message.data).message;
-    console.log(dir)
     if(dir === 'left'){
       if(this.bunny.x>0) {
         this.bunny.x -= speed;
