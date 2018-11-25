@@ -39,8 +39,8 @@ export default function(server) {
         var gamma    = event.gamma - offsetGamma;
 
     //    gyroa.innerHTML = Math.round(alpha)+ " : " +Math.round(event.alpha) +" :  "+Math.round(offsetAlpha);
-        gyrob.innerHTML = Math.round(beta)+ " : " +Math.round(event.beta) +" :  "+Math.round(offsetBeta);
-        gyroc.innerHTML = Math.round(gamma)+ " : " +Math.round(event.gamma) +" :  "+Math.round(offsetAlpha);
+    //     gyrob.innerHTML = Math.round(beta)+ " : " +Math.round(event.beta) +" :  "+Math.round(offsetBeta);
+    //     gyroc.innerHTML = Math.round(gamma)+ " : " +Math.round(event.gamma) +" :  "+Math.round(offsetAlpha);
         var eventCount = 1;
 
         if (Math.abs(gamma) > minDiff) {

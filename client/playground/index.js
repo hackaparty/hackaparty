@@ -9,6 +9,8 @@ if(urlParameters.length >= 2){
   gameStr = urlParameters[1];
 }
 
+$(document.body).addClass(gameStr)
+
 switch (gameStr) {
   case "snake":
     new snake();

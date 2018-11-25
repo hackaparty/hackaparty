@@ -13,7 +13,7 @@ let ws;
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-  console.log('Time: ', Date.now())
+  // console.log('Time: ', Date.now())
   next()
 })
 
@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
   var username = req.body.name;
   var userteam = req.body.team;
   var client_id = uuidv4();
-  console.log("Who logged in: " + username);
+  //console.log("Who logged in: " + username);
   
   global.users.push({name:username, team:userteam, client_id: client_id});
   var added = false;

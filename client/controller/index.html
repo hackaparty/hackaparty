@@ -7,11 +7,11 @@
 </head>
 <body>
 
-<div id="play" style="background: pink">
-  <div class="unser-info">
+<div id="play" style="">
+  <div class="user-info">
     <div class="team">
-      <span class="team-icon"></span>
       <span class="team-name"></span>
+      <span class="team-icon"></span>
     </div>
     <div class="user-name">
 
@@ -21,9 +21,9 @@
   <button class="fullscreen" style="height: 50px" onclick="onOpenFullscreen()">fullscreen</button>
   <button class="sync" style="height: 50px" onclick="onSyncStartPosition()">Sync start position</button>
 <!--  <div id="gyro-a">a</div>-->
-  <div id="gyro-b">b</div>
-  <div id="gyro-c">c</div>
-  <div id="gyro-d">d</div>
+  <div id="gyro-b"></div>
+  <div id="gyro-c"></div>
+  <div id="gyro-d"></div>
   <div class="button up">Up</div>
   <div class="button down">Down</div>
   <div class="button left">Left</div>
@@ -43,15 +43,41 @@
   body {
     user-select: none;
   }
+  #play {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .user-info {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    display: inline-block;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+  }
+  .team-icon {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 15px;
+  }
+
   .fullscreen {
     top: 0;
     right: 0;
     position: absolute;
+    background-image: url('./images/full-screen.png');
+      border-radius: 20px;
   }
   .sync {
     bottom: 0;
     right: 0;
     position: absolute;
+      border-radius: 20px;
   }
 
   .joystick{

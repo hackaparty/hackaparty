@@ -17,3 +17,18 @@ docker run -e DANGEROUSLY_DISABLE_HOST_CHECK -p 8080:8080 -p 3000:3000 -p 3001:3
 
 ## Docker Hub:
 [https://hub.docker.com/r/hackaparty/hackaparty/]
+
+## Build for local Docker
+```
+docker build -t abc/hackaparty .
+```
+
+## Run locally
+```
+./run http://IP:8080/login
+```
+
+# Main endpoints for playing
+http://IP:8080/startup for big display.
+
+http://IP:8080/login for players.  This is the URL which is transformed in to QR code form to make it easy for the players to access it by simply opening it on their phone (iOS automatically detects QR codes).
