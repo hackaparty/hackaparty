@@ -1,0 +1,6 @@
+.up{
+    position: fixed;
+    left: 35vw;
+    top: 5vh;
+    background-image: url('./images/up_active.png');
+}
