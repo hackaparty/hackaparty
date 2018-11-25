@@ -6,6 +6,10 @@ import backgroundimg from './images/background.jpeg'
 import rabbitHeadRed from './images/rabbithead_red.png'
 import playground from '../playground'
 import $ from "jquery";
+import backgroundNoise from './noise/jungle-run-01.mp3'
+import redTeamScream from './noise/man-scream-01.mp3'
+import blueTeamScream from './noise/woman-scream-01.mp3'
+import gameFinished from './noise/laughter-2.mp3'
 
 
 
@@ -31,8 +35,11 @@ class rabbitHead extends playground {
   initDisplay() {
     var app = new PIXI.Application(width, height, {backgroundColor: 0x1099bb});
     document.body.appendChild(app.view);
-
+    
     app.renderer.backgroundColor = 0x2E2E2E;
+   
+    var backgroundMusic = new Audio(backgroundNoise);
+    backgroundMusic.play();
 
     this.background = PIXI.Sprite.fromImage(backgroundimg)
     this.background.x = 0;
@@ -46,7 +53,6 @@ class rabbitHead extends playground {
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
     this.bunny.width = figureSize;
     this.bunny.height = figureSize;
-
     
     this.goalTeamA = PIXI.Sprite.fromImage(targetDummyA)
     this.goalTeamA.width = targetSize;
@@ -100,12 +106,16 @@ class rabbitHead extends playground {
         blueTeamWon = false;
         pointsB++;
         this.drawPointB(app);
+		var blueTeamAudio = new Audio(blueTeamScream);
+        blueTeamAudio.play();
         this.resetToDefaultPositions(app); 
       }
       else if (redTeamWon){
         redTeamWon = false;
         pointsA++;
         this.drawPointA(app);
+        var redTeamAudio = new Audio(redTeamScream);
+        redTeamAudio.play();
         this.resetToDefaultPositions(app); 
       }
 
@@ -113,11 +123,15 @@ class rabbitHead extends playground {
       {
         pointsA = 0;
         pointsB = 0;
+        var gameFinishedLaughter = new Audio(gameFinished);
+        gameFinishedLaughter.play();
         alert("Blue team collected 10 rabbit heads and won!");
       }
       if (pointsA > 5){
         pointsA = 0;
         pointsB = 0;        
+        var gameFinishedLaughter = new Audio(gameFinished);
+        gameFinishedLaughter.play(); 
         alert("Red team collected 10 rabbit heads and won!");
       }
     }
