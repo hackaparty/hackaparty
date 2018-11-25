@@ -3,7 +3,8 @@ const WebSocket = require('ws');
 const QRCode = require('qrcode');
 const app = express();
 const GamesServer = require('./server')
-let gamesServer;
+let gamesServer = null;
+
 const getGamesServer = (ws) => {
     if(gamesServer) {
         gamesServer.reconnect(ws)
