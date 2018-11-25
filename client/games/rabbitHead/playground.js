@@ -4,19 +4,23 @@ import targetDummyB from './images/target-dummy-blue.png'
 import rabbitHeadBlue from './images/rabbithead_blue.png'
 import rabbitHeadRed from './images/rabbithead_red.png'
 import playground from '../playground'
+import $ from "jquery";
 
 
-var width = 2000;
-var height = 2000;
-var radius = 600;
+
+var height = $(window).height();
+var width = height;
+var radius = width/3;
 var angleA = 0;
 var angleB = 180;
 var angleDelta = 0.5;
-var figureSize = 100;
-var targetSize = 200;
+var figureSize = width/20;
+var targetSize = width/10;
 var speed = 5;
 var fontsize = 100;
-var rabbitSize = 100;
+var rabbitSize = width/3;
+
+var x0 = width/2
 
 var pointsA = 0;
 var pointsB = 0;
