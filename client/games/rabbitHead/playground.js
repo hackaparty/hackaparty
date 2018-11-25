@@ -1,6 +1,8 @@
 import bunnyImage from './images/pony-icon.png'
 import targetDummyA from './images/target-dummy-red.png'
 import targetDummyB from './images/target-dummy-blue.png'
+import rabbitHeadBlue from './images/rabbithead_blue.png'
+import rabbitHeadRed from './images/rabbithead_red.png'
 import playground from '../playground'
 
 
@@ -14,6 +16,7 @@ var figureSize = 100;
 var targetSize = 200;
 var speed = 5;
 var fontsize = 100;
+var rabbitSize = 100;
 
 var pointsA = 0;
 var pointsB = 0;
@@ -42,14 +45,6 @@ class rabbitHead extends playground {
     this.goalTeamB = PIXI.Sprite.fromImage(targetDummyB)
     this.goalTeamB.width = targetSize;
     this.goalTeamB.height = targetSize;
-    
-    this.pointsAText = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: fontsize, fill : 0xff1010, align : 'center'});
-    this.pointsAText.x = width / 2 - fontsize / 2 - 20;
-    this.pointsAText.y = 10;
-
-    this.pointsBText = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: fontsize, fill : 0x0000FF, align : 'center'});
-    this.pointsBText.x = width / 2 + fontsize / 2 + 20;
-    this.pointsBText.y = 10;
 
     // center the sprite's anchor point
     this.bunny.anchor.set(0.5);
@@ -61,8 +56,6 @@ class rabbitHead extends playground {
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
-    app.stage.addChild(this.pointsAText);
-    app.stage.addChild(this.pointsBText);
 
 
     // Listen for animate update
@@ -96,15 +89,36 @@ class rabbitHead extends playground {
       {
         blueTeamWon = false;
         pointsB++;
-        this.pointsBText.setText(""+pointsB);
+        this.drawPoints(app);
+       // this.pointsBText.setText(""+pointsB);
         this.resetToDefaultPositions(app); 
       }
       else if (redTeamWon){
         redTeamWon = false;
         pointsA++;
-        this.pointsAText.setText(""+pointsA);
+        this.drawPoints(app);
         this.resetToDefaultPositions(app); 
       }
+    }
+    drawPoints(app) {
+      if(pointsA > 0){
+        var rabbit = PIXI.Sprite.fromImage(rabbitHeadRed)
+        rabbit.width = rabbitSize;
+        rabbit.height = rabbitSize;
+        rabbit.x = rabbitSize * (pointsA - 1);
+        rabbit.y = 10;
+        app.stage.addChild(rabbit);
+      }
+      
+      if(pointsB > 0){
+        var rabbit = PIXI.Sprite.fromImage(rabbitHeadBlue)
+        rabbit.width = rabbitSize;
+        rabbit.height = rabbitSize;
+        rabbit.x = width - rabbitSize * pointsB;
+        rabbit.y = 10;
+        app.stage.addChild(rabbit);
+      }
+      
     }
 
     resetToDefaultPositions(app){
