@@ -1,5 +1,6 @@
 # Hackaparty
 
+Getting the application:
 ```
 docker pull hackaparty/hackaparty
 ```
