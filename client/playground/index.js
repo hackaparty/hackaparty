@@ -19,8 +19,9 @@ switch (gameStr) {
   case "reaction":
     new reaction();
     break;
-    case "snake":
+  case "snake":
       new snake();
+      break;
   default:
     new example();
     break;
