@@ -21,7 +21,7 @@ var speed = 5;
 var fontsize = 100;
 var rabbitSize = width/3;
 
-var x0 = width/2
+
 
 var pointsA = 0;
 var pointsB = 0;
