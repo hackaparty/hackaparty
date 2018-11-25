@@ -61,13 +61,12 @@ class reaction extends playground {
       this.obstacles.children.forEach((obstacle) => {
         let player1 = this.players.children[0];
         let player2 = this.players.children[1];
-        if(Math.abs(obstacle.x - player1.x) < obstacleSize + playerSize){
-          if(Math.abs(obstacle.y - player1.y) < obstacleSize + playerSize){
-            console.log("collision with player1!")
+        if(Math.abs(obstacle.x - player1.x) < (obstacleSize + playerSize) / 2){
+          if(Math.abs(obstacle.y - player1.y) < (obstacleSize + playerSize) / 2){
+            alert("collision with player1!")
           }
-
-          if(Math.abs(obstacle.y - player2.y) < obstacleSize + playerSize){
-            console.log("collision with player2!")
+          if(Math.abs(obstacle.y - player2.y) < (obstacleSize + playerSize) / 2){
+            alert("collision with player2!")
           }
         }
       });
