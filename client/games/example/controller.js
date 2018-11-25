@@ -19,7 +19,6 @@ class example extends controller {
     }
 
     activateButton(dir)  {
-        console.log(dir)
         document.querySelector('.button.' + dir).classList.add('active');
         this.sendMessage(dir)
         setTimeout(() => {
