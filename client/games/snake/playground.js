@@ -281,7 +281,7 @@ class snake extends playground {
             for(var f = 0; f < fruechte.length; f++) {
                 fruechte[f].render();
             }
-            console.log("Test");
+
         }
 
         var updateSnakes = function () {
@@ -342,9 +342,9 @@ class snake extends playground {
 
         var meinSpielfeld = new Grid(60,40);
         console.log('height'+meinSpielfeld.height);
-        isRunning = true
-        var stopGameIntervalID = setInterval(function (){isRunning=false;},60000)
-        var gameLoopIntervalID = setInterval(gameLoop(), 1000);
+        isRunning = true;
+        var stopGameIntervalID = setInterval(function (){isRunning=false;},60000);
+        var gameLoopIntervalID = setInterval(function () {gameLoop()}, 1000);
 
 
         var teams = [
@@ -353,6 +353,8 @@ class snake extends playground {
         ];
 
         initSchlangen(teams,meinSpielfeld);
+
+
 
 
     }
