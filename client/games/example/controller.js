@@ -15,7 +15,7 @@ class example extends controller {
         document.querySelector('.button.down').onmousedown = () => this.activateButton('down')
         document.querySelector('.button.left').onmousedown = () => this.activateButton('left')
         document.querySelector('.button.right').onmousedown = () => this.activateButton('right')
-        registerGyroskop(this.socket);
+        registerGyroskop(this);
     }
 
     activateButton(dir)  {

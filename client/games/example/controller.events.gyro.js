@@ -1,5 +1,7 @@
 "use strict"
-export default function(server) {
+import controller from "../controller";
+
+export default function(controller) {
     window.addEventListener("deviceorientation", handleOrientation, true);
     var gyroa = document.getElementById("gyro-a");
     var gyrob = document.getElementById("gyro-b");
@@ -54,7 +56,7 @@ export default function(server) {
 
             for (var i = 0; i < eventCount; i++) {
                 
-                gamma > 0 ? server.send('up') : server.send('down');
+                gamma > 0 ? controller.activateButton('up') : controller.activateButton('down');
             } 
         }
 
@@ -68,7 +70,7 @@ export default function(server) {
             }
 
             for (var i = 0; i < eventCount; i++) {
-                beta > 0 ? server.send('right') : server.send('left');
+                beta > 0 ? controller.activateButton('right') : controller.activateButton('left');
             } 
         }
     }
