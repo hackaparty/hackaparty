@@ -1,5 +1,6 @@
 import playground from '../playground'
 import controller from "../controller";
+import $ from 'jquery'
 
 class snake extends playground {
     constructor() {
