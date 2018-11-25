@@ -246,7 +246,7 @@ class snake extends playground {
         }
 
         Frucht.prototype.render = function() {
-            ctx.fillStyle('black');
+            ctx.fillStyle = "#000000";
             let appleSize = segmentSize*(this.punkte/40)
             ctx.fillRect(this.x + segmentSize/2- appleSize/2, this.y + segmentSize/2- appleSize/2,
                 appleSize, appleSize);
@@ -275,11 +275,18 @@ class snake extends playground {
             }
 
             meinSpielfeld.render();
+            for(var s = 0; s < schlangen.length; s++) {
+               schlangen[s].render();
+            }
+            for(var f = 0; f < fruechte.length; f++) {
+                fruechte[f].render();
+            }
+            console.log("Test");
         }
 
         var updateSnakes = function () {
-            schlangen.forEach (schlange => {
-                let hasGrown = fruchtKollision(element)
+            schlangen.forEach (function(schlange) {
+                let hasGrown = fruchtKollision(schlange)
                 if (!hasGrown) {                        // move the snake only if it hasn't eaten a fruit
                     moveSnake(schlange);
                 }
@@ -295,13 +302,21 @@ class snake extends playground {
 
             let maxPoints = 0;
             let maxPointsSnake;
-            schlangen.forEach( schlange => {
+            schlangen.forEach( function(schlange){
                 if(schlange.points > maxPoints) // TODO : fix multiple winners
                 {
                     maxPoints = schlange.points;
                     maxPointsSnake = schlange;
                 }
             });
+
+            //Win screen
+            ctx.fillStyle = maxPointsSnake.color;
+            ctx.fillRect(0,0,screenWidth,screenHeight);
+            ctx.fillStyle = 'black';
+            ctx.font = "60px Arial";
+            let text = "Winner: Team "+maxPointsSnake.color;
+            ctx.fillText(text,screenWidth/2 - ctx.measureText(text).width/2, screenHeight/2);
         }
 
 
@@ -331,13 +346,15 @@ class snake extends playground {
         var stopGameIntervalID = setInterval(function (){isRunning=false;},60000)
         var gameLoopIntervalID = setInterval(gameLoop(), 1000);
 
+
         var teams = [
-            {color:'yellow'},
             {color:'red'},
             {color:'blue'}
         ];
 
         initSchlangen(teams,meinSpielfeld);
+
+
     }
 }
 
