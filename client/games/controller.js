@@ -15,9 +15,10 @@ class controller {
         const idMatch = window.location.search.match(/client_id=([^&]+)/)
         if(idMatch) {
             this.socket = new WebSocket("ws://" + location.hostname + ":3001/controller");
-            this.socket.onmessage = this.receiveMessage.bind(this)
+
             this.socket.onopen = function () {
                 this.sendMessage(JSON.stringify({init:idMatch[1]}))
+                this.socket.onmessage = this.receiveMessage.bind(this)
             }.bind(this)
         }
     }

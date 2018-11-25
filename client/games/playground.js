@@ -12,14 +12,18 @@ class playground {
 
     initSocket() {
         this.socket = new WebSocket("ws://" + location.hostname + ":3001/playground");
-        this.socket.onmessage = this.receiveMessage.bind(this);
+        this.socket.onopen = function () {
+            this.socket.onmessage = this.receiveMessage.bind(this)
+        }.bind(this)
     }
 
     sendMessage(message) {
         this.socket.send(message);
     }
 
-    receiveMessage(message) {}
+    receiveMessage(message) {
+        console.log(message)
+    }
 
     initControls() {
 

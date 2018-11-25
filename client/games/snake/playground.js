@@ -239,7 +239,7 @@ class snake extends playground {
             }
         }
 
-        frucht.prototype.render() {
+        frucht.prototype.render = function() {
             ctx.fillStyle('black');
             let appleSize = segmentSize*(this.punkte/40)
             ctx.fillRect(this.x + segmentSize/2- appleSize/2, this.y + segmentSize/2- appleSize/2,

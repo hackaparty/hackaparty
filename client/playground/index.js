@@ -1,5 +1,5 @@
 import example from '../games/example/playground'
-//import snake from '../games/snake/playground'
+import snake from '../games/snake/playground'
 import rabbitHead from '../games/rabbitHead/playground'
 import reaction from '../games/reaction/playground'
 
@@ -16,6 +16,8 @@ switch (gameStr) {
   case "reaction":
     new reaction();
     break;
+    case "snake":
+      new snake();
   default:
     new example();
     break;
