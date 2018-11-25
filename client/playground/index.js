@@ -10,6 +10,9 @@ if(urlParameters.length >= 2){
 }
 
 switch (gameStr) {
+  case "snake":
+    new snake();
+    break;
   case "rabbitHead":
     new rabbitHead();
     break;
