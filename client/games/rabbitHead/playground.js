@@ -135,7 +135,7 @@ class rabbitHead extends playground {
         app.stage.addChild(basicText);
         var gameFinishedLaughter = new Audio(gameFinished);
         gameFinishedLaughter.play();
-        setInterval (function (){ window.location.replace('/startup')}, 1000);
+        setTimeout (function (){ window.location.replace('/startup')}, 10000);
       }
       if (pointsA >= maxPoints){
         pointsA = 0;
@@ -153,7 +153,7 @@ class rabbitHead extends playground {
         pointsB = 0;        
         var gameFinishedLaughter = new Audio(gameFinished);
         gameFinishedLaughter.play();
-        setInterval (function (){ window.location.replace('/startup')}, 1000); 
+        setTimeout (function (){ window.location.replace('/startup')}, 10000); 
       }
     }
     drawPointA(app) {
