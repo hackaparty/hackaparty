@@ -13,7 +13,8 @@ const obstacleSpeedIncrease = 0.002;
 class reaction extends playground {
   constructor() {
     super()
-    this.direction = 0;
+    this.direction1 = 0;
+    this.direction2 = 0;
     this.obstacleSpeed = obstacleStartSpeed;
   }
 
@@ -35,10 +36,10 @@ class reaction extends playground {
     app.ticker.add(function (delta) {
       this.obstacleSpeed += obstacleSpeedIncrease * delta;
 
-      this.players.children.forEach((player) => {
-        player.y -= speed * this.direction * delta;
-        player.y = Math.max(playerSize / 2, Math.min(dimY - playerSize / 2, player.y));
-      });
+      this.players.children[0].y -= speed * this.direction1 * delta;
+      this.players.children[0].y = Math.max(playerSize / 2, Math.min(dimY - playerSize / 2, this.players.children[0].y));
+      this.players.children[1].y -= speed * this.direction2 * delta;
+      this.players.children[1].y = Math.max(playerSize / 2, Math.min(dimY - playerSize / 2, this.players.children[1].y));
 
       // Spawn obstacles
       if(this.obstacles.children.length < 10){
@@ -104,14 +105,17 @@ class reaction extends playground {
     this.obstacles.addChild(obstacle);
   }
 
-  receiveMessage(message){
-    let dir = JSON.parse(message.data).message;
+  receiveMessage(messageStr){
+    let message = JSON.parse(messageStr.data);
+    let dir = message.message;
+    let team = message.player.team === "red" ? 0 : 1;
+    console.log(message);
 
     if(dir === 'up'){
-      this.direction = 1;
+      team === 0 ? this.direction1 = 1 : this.direction2 = 1;
     }
     else if(dir === 'down'){
-      this.direction = -1;
+      team === 0 ? this.direction1 = -1 : this.direction2 = -1;
     }
   }
 }
