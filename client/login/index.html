@@ -15,10 +15,10 @@
             }        
             body {
                 user-select: none;
-                font-family:Arial, Helvetica, sans-serif;                
+                font-family: Arial, Helvetica, sans-serif;                
                 font-size: 150%;
             } 
-            form {
+            /* form {
                 display: grid;
                 grid-template-columns: 2fr 1fr;
                 grid-gap: 20px;
@@ -28,6 +28,26 @@
             }
             input[type=text] {
                 width: 100%;
+            } */
+            .form-control {
+                display: block;
+                width: 100%;
+                border: 1px solid #ced4da;
+            }
+
+            .form-control-ig {
+                height: calc(2.875rem + 2px);
+                padding: .5rem 1rem;
+                font-size: 1.25rem;
+                line-height: 1.5;
+                border-radius: .3rem;
+            }
+
+            .button {
+                background-color: lightgray;
+            }
+            .button:hover {
+                background-color: green;
             }
         </style>
     </head>
@@ -37,17 +57,17 @@
             <form action="/login" method="POST">
                 <p>
                 <label for="name">Name:</label>
-                <input id="name" name="name" type="text" placeholder="Enter a name to display on the big screen" />
+                <input class="form-control form-control-ig" id="name" name="name" type="text" placeholder="Enter a name to display on the big screen" />
                 </p>
                 <p>
-                <label for="team">Team:</label>
-                <select id="team" name="team">
+                <label for="team">Choose your team:</label>
+                <select class="form-control form-control-ig" id="team" name="team">
                     <option value="blue">Blue</option>
                     <option value="red" selected="selected">Red</option>
                 </select>
                 </p>
                 <p>
-                <input type="submit" value="Let's go!"></input>
+                <input class="button form-control form-control-ig" type="submit" value="Let's go!"></input>
                 </p>
             </form>
         </div>
