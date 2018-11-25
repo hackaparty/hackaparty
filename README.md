@@ -18,7 +18,6 @@ docker run -e DANGEROUSLY_DISABLE_HOST_CHECK -p 8080:8080 -p 3000:3000 -p 3001:3
 docker build -t abc/hackaparty .
 docker run -e DANGEROUSLY_DISABLE_HOST_CHECK -p 8080:8080 -p 3000:3000 -p 3001:3001 -d abc/hackaparty ./run http://<IP>:8080/login
 ```
-```
 
 ## Run local environment
 ```
