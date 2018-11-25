@@ -37,9 +37,6 @@ class rabbitHead extends playground {
     document.body.appendChild(app.view);
     
     app.renderer.backgroundColor = 0x2E2E2E;
-   
-    var backgroundMusic = new Audio(backgroundNoise);
-    backgroundMusic.play();
 
     this.background = PIXI.Sprite.fromImage(backgroundimg)
     this.background.x = 0;
@@ -72,6 +69,10 @@ class rabbitHead extends playground {
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
+   
+    var backgroundMusic = new Audio(backgroundNoise);
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
 
 
     // Listen for animate update
