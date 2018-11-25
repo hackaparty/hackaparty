@@ -4,6 +4,7 @@ import targetDummyB from './images/target-dummy-blue.png'
 import rabbitHeadBlue from './images/rabbithead_blue.png'
 import backgroundimg from './images/background.jpeg'
 import rabbitHeadRed from './images/rabbithead_red.png'
+import happyUnicorn from './images/Happy-unicorn.png'
 import playground from '../playground'
 import $ from "jquery";
 import backgroundNoise from './noise/jungle-run-01.mp3'
@@ -19,7 +20,7 @@ var angleB = 180;
 var angleDelta = 0.5;
 var figureSize = width/20;
 var targetSize = width/10;
-var speed = 5;
+var speed = 1;
 var rabbitSize = width/20;
 var maxPoints = 7;
 
@@ -129,10 +130,15 @@ class rabbitHead extends playground {
         app.stage.removeChild(this.goalTeamB);
         app.stage.removeChild(this.background);
         app.renderer.backgroundColor = 0x0000ff;
-        var basicText = new PIXI.Text('BLUE TEAN WON');
-        basicText.x = 30;
-        basicText.y = 90;
-        app.stage.addChild(basicText);
+                
+        var mybackground = PIXI.Sprite.fromImage(happyUnicorn);
+        mybackground.x = 0;
+        mybackground.y = 0;
+        mybackground.width = width;
+        mybackground.height = height;
+
+        app.stage.addChild(mybackground);
+
         var gameFinishedLaughter = new Audio(gameFinished);
         gameFinishedLaughter.play();
         setTimeout (function (){ window.location.replace('/startup')}, 10000);
@@ -145,11 +151,14 @@ class rabbitHead extends playground {
         app.stage.removeChild(this.goalTeamB);
         app.stage.removeChild(this.background);
         app.renderer.backgroundColor = 0xff0000;
-        var basicText = new PIXI.Text('RED TEAM WON');
-        basicText.x = 30;
-        basicText.y = 90;
+      
+        var mybackground = PIXI.Sprite.fromImage(happyUnicorn);
+        mybackground.x = 0;
+        mybackground.y = 0;
+        mybackground.width = width;
+        mybackground.height = height;
 
-        app.stage.addChild(basicText);
+        app.stage.addChild(mybackground);
         pointsB = 0;        
         var gameFinishedLaughter = new Audio(gameFinished);
         gameFinishedLaughter.play();
