@@ -53,6 +53,7 @@ class rabbitHead extends playground {
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
     this.bunny.width = figureSize;
     this.bunny.height = figureSize;
+
     
     this.goalTeamA = PIXI.Sprite.fromImage(targetDummyA)
     this.goalTeamA.width = targetSize;
@@ -72,6 +73,7 @@ class rabbitHead extends playground {
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
+
 
 
     // Listen for animate update
@@ -119,24 +121,35 @@ class rabbitHead extends playground {
         this.resetToDefaultPositions(app); 
       }
 
-      if (pointsB >= 5)
+      if (pointsB >= 2)
       {
         pointsA = 0;
         pointsB = 0;
         app.stage.removeChild(this.bunny);
         app.stage.removeChild(this.goalTeamA);
         app.stage.removeChild(this.goalTeamB);
+        app.stage.removeChild(this.background);
         app.renderer.backgroundColor = 0x0000ff;
+        var basicText = new PIXI.Text('BLUE TEAN WON');
+        basicText.x = 30;
+        basicText.y = 90;
+        app.stage.addChild(basicText);
         var gameFinishedLaughter = new Audio(gameFinished);
         gameFinishedLaughter.play();
       }
-      if (pointsA >= 5){
+      if (pointsA >= 2){
         pointsA = 0;
         pointsB = 0;
         app.stage.removeChild(this.bunny);
         app.stage.removeChild(this.goalTeamA);
         app.stage.removeChild(this.goalTeamB);
+        app.stage.removeChild(this.background);
         app.renderer.backgroundColor = 0xff0000;
+        var basicText = new PIXI.Text('RED TEAM WON');
+        basicText.x = 30;
+        basicText.y = 90;
+
+        app.stage.addChild(basicText);
         pointsB = 0;        
         var gameFinishedLaughter = new Audio(gameFinished);
         gameFinishedLaughter.play(); 
