@@ -18,10 +18,7 @@ var angleDelta = 0.5;
 var figureSize = width/20;
 var targetSize = width/10;
 var speed = 5;
-var fontsize = 100;
-var rabbitSize = width/3;
-
-
+var rabbitSize = width/20;
 
 var pointsA = 0;
 var pointsB = 0;
