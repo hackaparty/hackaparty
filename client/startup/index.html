@@ -75,7 +75,7 @@
             button.addEventListener('click', function(event) {
                 var games = ['rabbitHead', 'reaction', 'snake'];
                 var r = Math.floor(Math.random() * games.length);
-                window.location.href = "/playground?game=" + games[r];
+                window.location.href = "/playground?game=" + games[0]; // HARD-CODED for DEMO!
                 // alert('ping!');
             });
             button.addEventListener('mouseenter', function(event) {
