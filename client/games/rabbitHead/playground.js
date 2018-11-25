@@ -9,7 +9,7 @@ import $ from "jquery";
 import backgroundNoise from './noise/jungle-run-01.mp3'
 import redTeamScream from './noise/man-scream-01.mp3'
 import blueTeamScream from './noise/woman-scream-01.mp3'
-import gameFinished from './noise/laughter-2.mp3'
+import gameFinished from './noise/man-giggling-02.mp3'
 
 
 
@@ -37,9 +37,6 @@ class rabbitHead extends playground {
     document.body.appendChild(app.view);
     
     app.renderer.backgroundColor = 0x2E2E2E;
-   
-    var backgroundMusic = new Audio(backgroundNoise);
-    backgroundMusic.play();
 
     this.background = PIXI.Sprite.fromImage(backgroundimg)
     this.background.x = 0;
@@ -73,6 +70,10 @@ class rabbitHead extends playground {
     app.stage.addChild(this.bunny);
     app.stage.addChild(this.goalTeamA);
     app.stage.addChild(this.goalTeamB);
+   
+    var backgroundMusic = new Audio(backgroundNoise);
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
 
 
 
