@@ -1,4 +1,3 @@
-import controller from '../controller'
 import bunnyImage from './images/pony-icon.png'
 import targetDummyA from './images/target-dummy-red.png'
 import targetDummyB from './images/target-dummy-blue.png'
@@ -13,6 +12,7 @@ var angleB = 180;
 var angleDelta = 0.5;
 var figureSize = 200;
 var targetSize = 200;
+var speed = 10;
 
 
 class rabbitHead extends playground {
@@ -112,25 +112,26 @@ class rabbitHead extends playground {
   }
 
   receiveMessage(message) {
-    let dir = JSON.parse(message.data).message;;
+    let dir = JSON.parse(message.data).message;
+    console.log(dir)
     if(dir === 'left'){
       if(this.bunny.x>0) {
-        this.bunny.x -= 6;
+        this.bunny.x -= speed;
       }
     }
     else if(dir === 'right'){
       if(this.bunny.x < width) {
-        this.bunny.x += 6;
+        this.bunny.x += speed;
       }
     }
     else if(dir === 'up'){
       if(this.bunny.y > 0) {
-        this.bunny.y -= 6;
+        this.bunny.y -= speed;
       }
     }
     else if(dir === 'down'){
       if(this.bunny.y < height) {
-        this.bunny.y += 6;
+        this.bunny.y += speed;
       }
     }
   }
