@@ -73,7 +73,9 @@
         <script>
             var button = document.getElementsByClassName('button')[0];
             button.addEventListener('click', function(event) {
-                window.location.pathname = "/playground";
+                var games = ['rabbitHead', 'reaction', 'snake'];
+                var r = Math.floor(Math.random() * games.length);
+                window.location.href = "/playground?game=" + games[r];
                 // alert('ping!');
             });
             button.addEventListener('mouseenter', function(event) {
