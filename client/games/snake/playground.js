@@ -11,6 +11,11 @@ class snake extends playground {
         console.log('snake');
 
         $('body').css({margin:0,padding:0});
+
+        var elem = document.createElement('canvas');
+        elem.id = 'snakeCanvas';
+        document.body.appendChild(elem);
+
         var screenWidth = $(window).width();
         var screenHeight = $(window).height();
         var canvas = document.getElementById('snakeCanvas');
@@ -224,7 +229,7 @@ class snake extends playground {
         }
 
         var fruechte = [];
-        var frucht = new function (x,y,punkte) {
+        var Frucht = function (x,y,punkte) {
             this.x = x;
             this.y = y;
             this.punkte = punkte;
@@ -240,7 +245,7 @@ class snake extends playground {
             }
         }
 
-        frucht.prototype.render = function() {
+        Frucht.prototype.render = function() {
             ctx.fillStyle('black');
             let appleSize = segmentSize*(this.punkte/40)
             ctx.fillRect(this.x + segmentSize/2- appleSize/2, this.y + segmentSize/2- appleSize/2,
@@ -302,7 +307,7 @@ class snake extends playground {
 
         //Schaut ob eine Frucht auf einem Schlangenkopf ist
         //Fügt die Punkte hinzue und löscht die Frucht
-        //führt NICHT grow aus
+        //führt grow aus
         var fruchtKollision = function (schlange) {
 
             for(var f = 0; f < fruechte.length; f++) {

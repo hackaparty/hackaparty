@@ -24,6 +24,8 @@ class rabbitHead extends playground {
     var app = new PIXI.Application(width, height, {backgroundColor: 0x1099bb});
     document.body.appendChild(app.view);
 
+    app.renderer.backgroundColor = 0x2E2E2E;
+
     // create a new Sprite from an image path
     this.bunny = PIXI.Sprite.fromImage(bunnyImage)
     this.bunny.width = figureSize;
