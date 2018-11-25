@@ -9,6 +9,16 @@ class snake extends playground {
 
     initControls() {
         console.log('snake');
+        
+        this.teams = [
+            {color:'red'},
+            {color:'blue'}
+        ];
+
+        this.movements = [];
+        this.teams.forEach(function (teamName) {
+            this.movements.push({team:teamName.color, movement:[]})
+        }.bind(this));
 
         $('body').css({margin:0,padding:0});
 
@@ -26,11 +36,6 @@ class snake extends playground {
         var segmentSize;
 
         var isRunning;
-
-        var movements;
-        teams.forEach(function (teamName) {
-            movements.push({team:teamName.color, movement:[]})
-        })
 
         var colors = {
             'green':'#00ff00',
@@ -300,7 +305,7 @@ class snake extends playground {
 
         var moveSnake = function (schlange) {
             // TODO : fetch inputs and move snakes
-            movements.forEach( function (movementsForOneTeam) {
+            this.movements.forEach( function (movements)  {
                 schlangen.forEach( function (schlange) {
                     if (colors[movementsForOneTeam] === schlange.color) {
                         let m = getMostUsed(movementsForOneTeam.movements)
@@ -312,6 +317,7 @@ class snake extends playground {
                             schlange.segments[0].direction = 90;
                         } else if (m === 'left')
                         {
+                            console.log('left');
                             schlange.segments[0].direction = 180;
                         } else if (m === 'right')
                         {
@@ -320,7 +326,7 @@ class snake extends playground {
                         movementsForOneTeam.movements = [];
                     }
                 })
-            })
+            }.bind(this))
         }
         var getMostUsed = function (movements) {
             if (typeof(movements) !== 'undefined' && movements.length() > 0) {
@@ -397,13 +403,10 @@ class snake extends playground {
         var gameLoopIntervalID = setInterval(function () {gameLoop()}, 1000);
 
 
-        var teams = [
-            {color:'red'},
-            {color:'blue'}
-        ];
 
-        initSchlangen(teams,meinSpielfeld);
-
+        initSchlangen(this.teams,meinSpielfeld);
+        meinSpielfeld.render();
+        console.log('ok');
 
 
 
@@ -413,7 +416,7 @@ class snake extends playground {
     {
         let msg = JSON.parse(message.data);
         console.log(msg);
-        movements.forEach (function(movementsOneTeam) {
+        this.movements.forEach (function(movementsOneTeam) {
             if (movementsOneTeam.team === msg.team) {
                 movementsOneTeam.movements.push(msg.message);
             }
