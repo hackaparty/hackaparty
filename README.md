@@ -32,10 +32,10 @@ http://IP:8080/startup for big display.
 
 http://IP:8080/login for players.  This is the URL which is transformed in to QR code form to make it easy for the players to access it by simply opening it on their phone (iOS automatically detects QR codes).
 
-#License (MIT)
+# License (MIT)
 MIT License
 
-Copyright (c) [year] [fullname]
+Copyright (c) 2018 Hackaparty Team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
