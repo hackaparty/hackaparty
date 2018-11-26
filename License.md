@@ -1,4 +1,4 @@
-#License (MIT)
+# License
 MIT License
 
 Copyright (c) [year] [fullname]
