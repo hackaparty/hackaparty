@@ -27,6 +27,13 @@ npm install
 ./run http://IP:8080/login
 ```
 
+or if you dont know your local network ip:
+
+```
+npm server local
+```
+the bash will show you where to startup and login
+
 # Main endpoints for playing
 http://IP:8080/startup for big display.
 
